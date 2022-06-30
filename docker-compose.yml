@@ -1,0 +1,45 @@
+version: '3.5'
+
+volumes:
+    dbdata:
+      name: backend_dbdata
+      external: true
+    migrations:
+    metadata:
+
+services:
+  backend:
+    container_name: neofelis-backend
+    image: neofelis-backend
+    restart: always
+    depends_on:
+      - timescale
+    build:
+      context: .
+    env_file: ./.env
+    volumes:
+      - migrations:/hasura-migrations
+      - metadata:/hasura-metadata
+    ports:
+      - 8090:8080
+  timescale:
+    container_name: neofelis-timescale
+    image: timescale/timescaledb:latest-pg14
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: master
+      POSTGRES_PASSWORD: masterkey_postgres
+      POSTGRES_DB: neofelis
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - dbdata:/var/lib/postgresql/data/pgdata
+  pgadmin:
+    container_name: neofelis-pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - 5050:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "beno.dresch@outlook.com"
+      PGADMIN_DEFAULT_PASSWORD: "masterkey_pgadmin"
