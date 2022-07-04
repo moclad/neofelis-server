@@ -1,0 +1,28 @@
+table:
+  name: recurring
+  schema: public
+object_relationships:
+  - name: accountInfoByAccountTo
+    using:
+      foreign_key_constraint_on: account_to
+  - name: account_info
+    using:
+      foreign_key_constraint_on: account_from
+  - name: category
+    using:
+      foreign_key_constraint_on: category_id
+array_relationships:
+  - name: recurring_labels
+    using:
+      foreign_key_constraint_on:
+        column: recurring_id
+        table:
+          name: recurring_labels
+          schema: public
+  - name: transactions
+    using:
+      foreign_key_constraint_on:
+        column: recurring_id
+        table:
+          name: transactions
+          schema: public

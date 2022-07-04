@@ -1,0 +1,54 @@
+table:
+  name: account_info
+  schema: public
+object_relationships:
+  - name: asset
+    using:
+      foreign_key_constraint_on:
+        column: id
+        table:
+          name: assets
+          schema: public
+  - name: expense
+    using:
+      foreign_key_constraint_on:
+        column: id
+        table:
+          name: expenses
+          schema: public
+  - name: liability
+    using:
+      foreign_key_constraint_on:
+        column: id
+        table:
+          name: liabilities
+          schema: public
+  - name: revenue
+    using:
+      foreign_key_constraint_on:
+        column: id
+        table:
+          name: revenues
+          schema: public
+array_relationships:
+  - name: recurrings
+    using:
+      foreign_key_constraint_on:
+        column: account_from
+        table:
+          name: recurring
+          schema: public
+  - name: recurringsByAccountTo
+    using:
+      foreign_key_constraint_on:
+        column: account_to
+        table:
+          name: recurring
+          schema: public
+  - name: transaction_accounts
+    using:
+      foreign_key_constraint_on:
+        column: account_id
+        table:
+          name: transaction_accounts
+          schema: public

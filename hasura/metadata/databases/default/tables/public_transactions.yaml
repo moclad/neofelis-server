@@ -1,0 +1,32 @@
+table:
+  name: transactions
+  schema: public
+object_relationships:
+  - name: category
+    using:
+      foreign_key_constraint_on: category_id
+  - name: recurring
+    using:
+      foreign_key_constraint_on: recurring_id
+  - name: transaction_attachment
+    using:
+      foreign_key_constraint_on:
+        column: transaction_id
+        table:
+          name: transaction_attachments
+          schema: public
+array_relationships:
+  - name: transaction_accounts
+    using:
+      foreign_key_constraint_on:
+        column: transaction_id
+        table:
+          name: transaction_accounts
+          schema: public
+  - name: transaction_labels
+    using:
+      foreign_key_constraint_on:
+        column: transaction_id
+        table:
+          name: transaction_labels
+          schema: public

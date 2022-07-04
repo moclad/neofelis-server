@@ -1,0 +1,7 @@
+table:
+  name: assets
+  schema: public
+object_relationships:
+  - name: account_info
+    using:
+      foreign_key_constraint_on: id

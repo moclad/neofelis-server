@@ -1,0 +1,11 @@
+table:
+  name: users
+  schema: public
+object_relationships:
+  - name: user_setting
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          name: user_settings
+          schema: public

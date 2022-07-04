@@ -1,0 +1,18 @@
+table:
+  name: categories
+  schema: public
+array_relationships:
+  - name: recurrings
+    using:
+      foreign_key_constraint_on:
+        column: category_id
+        table:
+          name: recurring
+          schema: public
+  - name: transactions
+    using:
+      foreign_key_constraint_on:
+        column: category_id
+        table:
+          name: transactions
+          schema: public
