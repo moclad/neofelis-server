@@ -124,6 +124,7 @@ CREATE TABLE public.recurring (
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     until_date date,
     no_of_times integer,
+    active boolean DEFAULT true NOT NULL,
     CONSTRAINT cycle_type_constrain CHECK (((cycle_type >= 1) AND (cycle_type <= 4))),
     CONSTRAINT duration_type_constrain CHECK (((duration_type >= 1) AND (duration_type <= 3))),
     CONSTRAINT transaction_type_constrain CHECK (((transaction_type >= 1) AND (transaction_type <= 3)))

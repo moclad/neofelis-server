@@ -1,11 +1,9 @@
 version: '3.5'
 
 volumes:
-    dbdata:
-      name: backend_dbdata
-      external: true
-    migrations:
-    metadata:
+  dbdata:
+    name: backend_dbdata
+    external: true
 
 services:
   backend:
@@ -17,9 +15,6 @@ services:
     build:
       context: .
     env_file: ./.env
-    volumes:
-      - migrations:/hasura-migrations
-      - metadata:/hasura-metadata
     ports:
       - 8090:8080
   timescale:
