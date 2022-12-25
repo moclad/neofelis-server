@@ -1,4 +1,4 @@
-FROM hasura/graphql-engine:v2.12.0-beta.1
+FROM hasura/graphql-engine:latest
 
 # # Copy migrations directory
 COPY ./hasura/migrations /hasura-migrations
@@ -9,14 +9,9 @@ COPY ./hasura/metadata /hasura-metadata
 # Enable the console
 ENV HASURA_GRAPHQL_ENABLE_CONSOLE=true
 
-# Heroku hobby tier PG has few limitations including 20 max connections
-# https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier
-ENV HASURA_GRAPHQL_PG_CONNECTIONS=15
-
 # https://github.com/hasura/graphql-engine/issues/4651#issuecomment-623414531
 ENV HASURA_GRAPHQL_CLI_ENVIRONMENT=default
 
-# https://github.com/hasura/graphql-engine/issues/5172#issuecomment-653774367
 ENV HASURA_GRAPHQL_MIGRATIONS_DATABASE_ENV_VAR=DATABASE_URL
 
 # Enable JWT
@@ -37,4 +32,4 @@ ENV NEOFELIS_EVENT_WEBHOOK_SHARED_SECRET=NEOFELIS_EVENT_WEBHOOK_SHARED_SECRET
 CMD graphql-engine \
   --database-url $DATABASE_URL \
   serve \
-  --server-port $PORT
+  --server-port 8080

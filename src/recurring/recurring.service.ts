@@ -185,10 +185,13 @@ export class RecurringService {
   handleTimeout() {
     const recurringItems = this.sdk.getRecurringItems();
 
+    //const emailQueue = new Bull('EmailQueue');
+
     recurringItems
       .then((data) => {
         data.recurring.forEach((item) => {
           this.addCronJob(item as Recurring);
+          // emailQueue.add(item);
         });
       })
       .catch((onError) => {
@@ -200,6 +203,11 @@ export class RecurringService {
         this.sdk.insertNotification({
           object: submitData,
         });
+      })
+      .finally(() => {
+        // emailQueue.process(async (job) => {
+        // console.log(job.data);
+        // });
       });
   }
 

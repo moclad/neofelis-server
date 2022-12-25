@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 import { HasuraModule } from '@golevelup/nestjs-hasura';
+import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -14,6 +15,20 @@ import { SdkModule } from './sdk/sdk.module';
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          connectionName: 'neofelis',
+          name: 'neofelis',
+          host: configService.get<string>('REDIS_HOST'),
+          port: configService.get<number>('REDIS_PORT'),
+          username: configService.get<string>('REDIS_USER'),
+          password: configService.get<string>('REDIS_PASS'),
+        },
+      }),
+      inject: [ConfigService],
     }),
     HasuraModule.forRootAsync(HasuraModule, {
       inject: [ConfigService],

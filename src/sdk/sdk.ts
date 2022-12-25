@@ -106,6 +106,14 @@ export type Account_Info = {
   transaction_accounts: Array<Transaction_Accounts>;
   /** An aggregate relationship */
   transaction_accounts_aggregate: Transaction_Accounts_Aggregate;
+  /** An array relationship */
+  transactions: Array<Transactions>;
+  /** An array relationship */
+  transactionsByAccountTo: Array<Transactions>;
+  /** An aggregate relationship */
+  transactionsByAccountTo_aggregate: Transactions_Aggregate;
+  /** An aggregate relationship */
+  transactions_aggregate: Transactions_Aggregate;
   type: Scalars['bpchar'];
   updated_at: Scalars['timestamptz'];
 };
@@ -170,6 +178,46 @@ export type Account_InfoTransaction_Accounts_AggregateArgs = {
   where: InputMaybe<Transaction_Accounts_Bool_Exp>;
 };
 
+
+/** columns and relationships of "account_info" */
+export type Account_InfoTransactionsArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Order_By>>;
+  where: InputMaybe<Transactions_Bool_Exp>;
+};
+
+
+/** columns and relationships of "account_info" */
+export type Account_InfoTransactionsByAccountToArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Order_By>>;
+  where: InputMaybe<Transactions_Bool_Exp>;
+};
+
+
+/** columns and relationships of "account_info" */
+export type Account_InfoTransactionsByAccountTo_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Order_By>>;
+  where: InputMaybe<Transactions_Bool_Exp>;
+};
+
+
+/** columns and relationships of "account_info" */
+export type Account_InfoTransactions_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Order_By>>;
+  where: InputMaybe<Transactions_Bool_Exp>;
+};
+
 /** aggregated selection of "account_info" */
 export type Account_Info_Aggregate = {
   __typename?: 'account_info_aggregate';
@@ -219,8 +267,15 @@ export type Account_Info_Bool_Exp = {
   name?: InputMaybe<String_Comparison_Exp>;
   recurrings?: InputMaybe<Recurring_Bool_Exp>;
   recurringsByAccountTo?: InputMaybe<Recurring_Bool_Exp>;
+  recurringsByAccountTo_aggregate?: InputMaybe<Recurring_Aggregate_Bool_Exp>;
+  recurrings_aggregate?: InputMaybe<Recurring_Aggregate_Bool_Exp>;
   revenue?: InputMaybe<Revenues_Bool_Exp>;
   transaction_accounts?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  transaction_accounts_aggregate?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp>;
+  transactions?: InputMaybe<Transactions_Bool_Exp>;
+  transactionsByAccountTo?: InputMaybe<Transactions_Bool_Exp>;
+  transactionsByAccountTo_aggregate?: InputMaybe<Transactions_Aggregate_Bool_Exp>;
+  transactions_aggregate?: InputMaybe<Transactions_Aggregate_Bool_Exp>;
   type?: InputMaybe<Bpchar_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
@@ -248,6 +303,8 @@ export type Account_Info_Insert_Input = {
   recurringsByAccountTo?: InputMaybe<Recurring_Arr_Rel_Insert_Input>;
   revenue?: InputMaybe<Revenues_Obj_Rel_Insert_Input>;
   transaction_accounts?: InputMaybe<Transaction_Accounts_Arr_Rel_Insert_Input>;
+  transactions?: InputMaybe<Transactions_Arr_Rel_Insert_Input>;
+  transactionsByAccountTo?: InputMaybe<Transactions_Arr_Rel_Insert_Input>;
   type?: InputMaybe<Scalars['bpchar']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
 };
@@ -307,6 +364,8 @@ export type Account_Info_Order_By = {
   recurrings_aggregate?: InputMaybe<Recurring_Aggregate_Order_By>;
   revenue?: InputMaybe<Revenues_Order_By>;
   transaction_accounts_aggregate?: InputMaybe<Transaction_Accounts_Aggregate_Order_By>;
+  transactionsByAccountTo_aggregate?: InputMaybe<Transactions_Aggregate_Order_By>;
+  transactions_aggregate?: InputMaybe<Transactions_Aggregate_Order_By>;
   type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -867,7 +926,9 @@ export type Categories_Bool_Exp = {
   id?: InputMaybe<Bigint_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   recurrings?: InputMaybe<Recurring_Bool_Exp>;
+  recurrings_aggregate?: InputMaybe<Recurring_Aggregate_Bool_Exp>;
   transactions?: InputMaybe<Transactions_Bool_Exp>;
+  transactions_aggregate?: InputMaybe<Transactions_Aggregate_Bool_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -1432,7 +1493,9 @@ export type Labels_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   recurring_labels?: InputMaybe<Recurring_Labels_Bool_Exp>;
+  recurring_labels_aggregate?: InputMaybe<Recurring_Labels_Aggregate_Bool_Exp>;
   transaction_labels?: InputMaybe<Transaction_Labels_Bool_Exp>;
+  transaction_labels_aggregate?: InputMaybe<Transaction_Labels_Aggregate_Bool_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -3672,6 +3735,107 @@ export type Recurring_Aggregate = {
   nodes: Array<Recurring>;
 };
 
+export type Recurring_Aggregate_Bool_Exp = {
+  avg?: InputMaybe<Recurring_Aggregate_Bool_Exp_Avg>;
+  bool_and?: InputMaybe<Recurring_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Recurring_Aggregate_Bool_Exp_Bool_Or>;
+  corr?: InputMaybe<Recurring_Aggregate_Bool_Exp_Corr>;
+  count?: InputMaybe<Recurring_Aggregate_Bool_Exp_Count>;
+  covar_samp?: InputMaybe<Recurring_Aggregate_Bool_Exp_Covar_Samp>;
+  max?: InputMaybe<Recurring_Aggregate_Bool_Exp_Max>;
+  min?: InputMaybe<Recurring_Aggregate_Bool_Exp_Min>;
+  stddev_samp?: InputMaybe<Recurring_Aggregate_Bool_Exp_Stddev_Samp>;
+  sum?: InputMaybe<Recurring_Aggregate_Bool_Exp_Sum>;
+  var_samp?: InputMaybe<Recurring_Aggregate_Bool_Exp_Var_Samp>;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Avg = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Avg_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Corr = {
+  arguments: Recurring_Aggregate_Bool_Exp_Corr_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Corr_Arguments = {
+  X: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+  Y: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Recurring_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Covar_Samp = {
+  arguments: Recurring_Aggregate_Bool_Exp_Covar_Samp_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Covar_Samp_Arguments = {
+  X: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+  Y: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Max = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Max_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Min = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Min_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Stddev_Samp = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Sum = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Sum_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Recurring_Aggregate_Bool_Exp_Var_Samp = {
+  arguments: Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
 /** aggregate fields of "recurring" */
 export type Recurring_Aggregate_Fields = {
   __typename?: 'recurring_aggregate_fields';
@@ -3764,10 +3928,12 @@ export type Recurring_Bool_Exp = {
   id?: InputMaybe<Bigint_Comparison_Exp>;
   no_of_times?: InputMaybe<Int_Comparison_Exp>;
   recurring_labels?: InputMaybe<Recurring_Labels_Bool_Exp>;
+  recurring_labels_aggregate?: InputMaybe<Recurring_Labels_Aggregate_Bool_Exp>;
   start_on?: InputMaybe<Date_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   transaction_type?: InputMaybe<Int_Comparison_Exp>;
   transactions?: InputMaybe<Transactions_Bool_Exp>;
+  transactions_aggregate?: InputMaybe<Transactions_Aggregate_Bool_Exp>;
   until_date?: InputMaybe<Date_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
@@ -3832,6 +3998,17 @@ export type Recurring_Labels_Aggregate = {
   __typename?: 'recurring_labels_aggregate';
   aggregate: Maybe<Recurring_Labels_Aggregate_Fields>;
   nodes: Array<Recurring_Labels>;
+};
+
+export type Recurring_Labels_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Recurring_Labels_Aggregate_Bool_Exp_Count>;
+};
+
+export type Recurring_Labels_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Recurring_Labels_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Recurring_Labels_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "recurring_labels" */
@@ -4279,6 +4456,66 @@ export enum Recurring_Select_Column {
   UntilDate = 'until_date',
   /** column name */
   UpdatedAt = 'updated_at'
+}
+
+/** select "recurring_aggregate_bool_exp_avg_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Avg_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "recurring_aggregate_bool_exp_bool_and_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Active = 'active'
+}
+
+/** select "recurring_aggregate_bool_exp_bool_or_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Active = 'active'
+}
+
+/** select "recurring_aggregate_bool_exp_corr_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Corr_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "recurring_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "recurring_aggregate_bool_exp_max_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Max_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "recurring_aggregate_bool_exp_min_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Min_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "recurring_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "recurring_aggregate_bool_exp_sum_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Sum_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "recurring_aggregate_bool_exp_var_samp_arguments_columns" columns of table "recurring" */
+export enum Recurring_Select_Column_Recurring_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
 }
 
 /** input type for updating data in table "recurring" */
@@ -4822,7 +5059,7 @@ export type Subscription_Root = {
   account_info_aggregate: Account_Info_Aggregate;
   /** fetch data from the table: "account_info" using primary key columns */
   account_info_by_pk: Maybe<Account_Info>;
-  /** fetch data from the table in a streaming manner : "account_info" */
+  /** fetch data from the table in a streaming manner: "account_info" */
   account_info_stream: Array<Account_Info>;
   /** fetch data from the table: "assets" */
   assets: Array<Assets>;
@@ -4830,7 +5067,7 @@ export type Subscription_Root = {
   assets_aggregate: Assets_Aggregate;
   /** fetch data from the table: "assets" using primary key columns */
   assets_by_pk: Maybe<Assets>;
-  /** fetch data from the table in a streaming manner : "assets" */
+  /** fetch data from the table in a streaming manner: "assets" */
   assets_stream: Array<Assets>;
   /** fetch data from the table: "categories" */
   categories: Array<Categories>;
@@ -4838,7 +5075,7 @@ export type Subscription_Root = {
   categories_aggregate: Categories_Aggregate;
   /** fetch data from the table: "categories" using primary key columns */
   categories_by_pk: Maybe<Categories>;
-  /** fetch data from the table in a streaming manner : "categories" */
+  /** fetch data from the table in a streaming manner: "categories" */
   categories_stream: Array<Categories>;
   /** fetch data from the table: "expenses" */
   expenses: Array<Expenses>;
@@ -4846,7 +5083,7 @@ export type Subscription_Root = {
   expenses_aggregate: Expenses_Aggregate;
   /** fetch data from the table: "expenses" using primary key columns */
   expenses_by_pk: Maybe<Expenses>;
-  /** fetch data from the table in a streaming manner : "expenses" */
+  /** fetch data from the table in a streaming manner: "expenses" */
   expenses_stream: Array<Expenses>;
   /** fetch data from the table: "labels" */
   labels: Array<Labels>;
@@ -4854,7 +5091,7 @@ export type Subscription_Root = {
   labels_aggregate: Labels_Aggregate;
   /** fetch data from the table: "labels" using primary key columns */
   labels_by_pk: Maybe<Labels>;
-  /** fetch data from the table in a streaming manner : "labels" */
+  /** fetch data from the table in a streaming manner: "labels" */
   labels_stream: Array<Labels>;
   /** fetch data from the table: "liabilities" */
   liabilities: Array<Liabilities>;
@@ -4862,7 +5099,7 @@ export type Subscription_Root = {
   liabilities_aggregate: Liabilities_Aggregate;
   /** fetch data from the table: "liabilities" using primary key columns */
   liabilities_by_pk: Maybe<Liabilities>;
-  /** fetch data from the table in a streaming manner : "liabilities" */
+  /** fetch data from the table in a streaming manner: "liabilities" */
   liabilities_stream: Array<Liabilities>;
   /** fetch data from the table: "notifications" */
   notifications: Array<Notifications>;
@@ -4870,7 +5107,7 @@ export type Subscription_Root = {
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk: Maybe<Notifications>;
-  /** fetch data from the table in a streaming manner : "notifications" */
+  /** fetch data from the table in a streaming manner: "notifications" */
   notifications_stream: Array<Notifications>;
   /** fetch data from the table: "recurring" */
   recurring: Array<Recurring>;
@@ -4884,9 +5121,9 @@ export type Subscription_Root = {
   recurring_labels_aggregate: Recurring_Labels_Aggregate;
   /** fetch data from the table: "recurring_labels" using primary key columns */
   recurring_labels_by_pk: Maybe<Recurring_Labels>;
-  /** fetch data from the table in a streaming manner : "recurring_labels" */
+  /** fetch data from the table in a streaming manner: "recurring_labels" */
   recurring_labels_stream: Array<Recurring_Labels>;
-  /** fetch data from the table in a streaming manner : "recurring" */
+  /** fetch data from the table in a streaming manner: "recurring" */
   recurring_stream: Array<Recurring>;
   /** fetch data from the table: "revenues" */
   revenues: Array<Revenues>;
@@ -4894,7 +5131,7 @@ export type Subscription_Root = {
   revenues_aggregate: Revenues_Aggregate;
   /** fetch data from the table: "revenues" using primary key columns */
   revenues_by_pk: Maybe<Revenues>;
-  /** fetch data from the table in a streaming manner : "revenues" */
+  /** fetch data from the table in a streaming manner: "revenues" */
   revenues_stream: Array<Revenues>;
   /** An array relationship */
   transaction_accounts: Array<Transaction_Accounts>;
@@ -4902,7 +5139,7 @@ export type Subscription_Root = {
   transaction_accounts_aggregate: Transaction_Accounts_Aggregate;
   /** fetch data from the table: "transaction_accounts" using primary key columns */
   transaction_accounts_by_pk: Maybe<Transaction_Accounts>;
-  /** fetch data from the table in a streaming manner : "transaction_accounts" */
+  /** fetch data from the table in a streaming manner: "transaction_accounts" */
   transaction_accounts_stream: Array<Transaction_Accounts>;
   /** fetch data from the table: "transaction_attachments" */
   transaction_attachments: Array<Transaction_Attachments>;
@@ -4910,7 +5147,7 @@ export type Subscription_Root = {
   transaction_attachments_aggregate: Transaction_Attachments_Aggregate;
   /** fetch data from the table: "transaction_attachments" using primary key columns */
   transaction_attachments_by_pk: Maybe<Transaction_Attachments>;
-  /** fetch data from the table in a streaming manner : "transaction_attachments" */
+  /** fetch data from the table in a streaming manner: "transaction_attachments" */
   transaction_attachments_stream: Array<Transaction_Attachments>;
   /** An array relationship */
   transaction_labels: Array<Transaction_Labels>;
@@ -4918,7 +5155,7 @@ export type Subscription_Root = {
   transaction_labels_aggregate: Transaction_Labels_Aggregate;
   /** fetch data from the table: "transaction_labels" using primary key columns */
   transaction_labels_by_pk: Maybe<Transaction_Labels>;
-  /** fetch data from the table in a streaming manner : "transaction_labels" */
+  /** fetch data from the table in a streaming manner: "transaction_labels" */
   transaction_labels_stream: Array<Transaction_Labels>;
   /** An array relationship */
   transactions: Array<Transactions>;
@@ -4926,7 +5163,7 @@ export type Subscription_Root = {
   transactions_aggregate: Transactions_Aggregate;
   /** fetch data from the table: "transactions" using primary key columns */
   transactions_by_pk: Maybe<Transactions>;
-  /** fetch data from the table in a streaming manner : "transactions" */
+  /** fetch data from the table in a streaming manner: "transactions" */
   transactions_stream: Array<Transactions>;
   /** fetch data from the table: "user_settings" */
   user_settings: Array<User_Settings>;
@@ -4934,7 +5171,7 @@ export type Subscription_Root = {
   user_settings_aggregate: User_Settings_Aggregate;
   /** fetch data from the table: "user_settings" using primary key columns */
   user_settings_by_pk: Maybe<User_Settings>;
-  /** fetch data from the table in a streaming manner : "user_settings" */
+  /** fetch data from the table in a streaming manner: "user_settings" */
   user_settings_stream: Array<User_Settings>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
@@ -4942,7 +5179,7 @@ export type Subscription_Root = {
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk: Maybe<Users>;
-  /** fetch data from the table in a streaming manner : "users" */
+  /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
 };
 
@@ -5464,6 +5701,91 @@ export type Transaction_Accounts_Aggregate = {
   nodes: Array<Transaction_Accounts>;
 };
 
+export type Transaction_Accounts_Aggregate_Bool_Exp = {
+  avg?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Avg>;
+  corr?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Corr>;
+  count?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Count>;
+  covar_samp?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Covar_Samp>;
+  max?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Max>;
+  min?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Min>;
+  stddev_samp?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Stddev_Samp>;
+  sum?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Sum>;
+  var_samp?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp_Var_Samp>;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Avg = {
+  arguments: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Avg_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Corr = {
+  arguments: Transaction_Accounts_Aggregate_Bool_Exp_Corr_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Corr_Arguments = {
+  X: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+  Y: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Transaction_Accounts_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Covar_Samp = {
+  arguments: Transaction_Accounts_Aggregate_Bool_Exp_Covar_Samp_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Covar_Samp_Arguments = {
+  X: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+  Y: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Max = {
+  arguments: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Max_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Min = {
+  arguments: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Min_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Stddev_Samp = {
+  arguments: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Sum = {
+  arguments: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Sum_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transaction_Accounts_Aggregate_Bool_Exp_Var_Samp = {
+  arguments: Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
 /** aggregate fields of "transaction_accounts" */
 export type Transaction_Accounts_Aggregate_Fields = {
   __typename?: 'transaction_accounts_aggregate_fields';
@@ -5656,6 +5978,54 @@ export enum Transaction_Accounts_Select_Column {
   TransactionId = 'transaction_id',
   /** column name */
   UpdatedAt = 'updated_at'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_avg_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Avg_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_corr_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Corr_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_max_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Max_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_min_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Min_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_sum_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Sum_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transaction_accounts_aggregate_bool_exp_var_samp_arguments_columns" columns of table "transaction_accounts" */
+export enum Transaction_Accounts_Select_Column_Transaction_Accounts_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
 }
 
 /** input type for updating data in table "transaction_accounts" */
@@ -6105,6 +6475,17 @@ export type Transaction_Labels_Aggregate = {
   nodes: Array<Transaction_Labels>;
 };
 
+export type Transaction_Labels_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Transaction_Labels_Aggregate_Bool_Exp_Count>;
+};
+
+export type Transaction_Labels_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Transaction_Labels_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transaction_Labels_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "transaction_labels" */
 export type Transaction_Labels_Aggregate_Fields = {
   __typename?: 'transaction_labels_aggregate_fields';
@@ -6388,7 +6769,11 @@ export type Transaction_Labels_Variance_Order_By = {
 /** columns and relationships of "transactions" */
 export type Transactions = {
   __typename?: 'transactions';
+  /** An object relationship */
+  accountInfoByAccountTo: Account_Info;
   account_from: Scalars['Int'];
+  /** An object relationship */
+  account_info: Account_Info;
   account_to: Scalars['Int'];
   amount: Scalars['float8'];
   /** An object relationship */
@@ -6460,6 +6845,91 @@ export type Transactions_Aggregate = {
   __typename?: 'transactions_aggregate';
   aggregate: Maybe<Transactions_Aggregate_Fields>;
   nodes: Array<Transactions>;
+};
+
+export type Transactions_Aggregate_Bool_Exp = {
+  avg?: InputMaybe<Transactions_Aggregate_Bool_Exp_Avg>;
+  corr?: InputMaybe<Transactions_Aggregate_Bool_Exp_Corr>;
+  count?: InputMaybe<Transactions_Aggregate_Bool_Exp_Count>;
+  covar_samp?: InputMaybe<Transactions_Aggregate_Bool_Exp_Covar_Samp>;
+  max?: InputMaybe<Transactions_Aggregate_Bool_Exp_Max>;
+  min?: InputMaybe<Transactions_Aggregate_Bool_Exp_Min>;
+  stddev_samp?: InputMaybe<Transactions_Aggregate_Bool_Exp_Stddev_Samp>;
+  sum?: InputMaybe<Transactions_Aggregate_Bool_Exp_Sum>;
+  var_samp?: InputMaybe<Transactions_Aggregate_Bool_Exp_Var_Samp>;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Avg = {
+  arguments: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Avg_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Corr = {
+  arguments: Transactions_Aggregate_Bool_Exp_Corr_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Corr_Arguments = {
+  X: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+  Y: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Transactions_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Covar_Samp = {
+  arguments: Transactions_Aggregate_Bool_Exp_Covar_Samp_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Covar_Samp_Arguments = {
+  X: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+  Y: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Max = {
+  arguments: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Max_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Min = {
+  arguments: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Min_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Stddev_Samp = {
+  arguments: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Sum = {
+  arguments: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Sum_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Transactions_Aggregate_Bool_Exp_Var_Samp = {
+  arguments: Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
 };
 
 /** aggregate fields of "transactions" */
@@ -6535,7 +7005,9 @@ export type Transactions_Bool_Exp = {
   _and?: InputMaybe<Array<Transactions_Bool_Exp>>;
   _not?: InputMaybe<Transactions_Bool_Exp>;
   _or?: InputMaybe<Array<Transactions_Bool_Exp>>;
+  accountInfoByAccountTo?: InputMaybe<Account_Info_Bool_Exp>;
   account_from?: InputMaybe<Int_Comparison_Exp>;
+  account_info?: InputMaybe<Account_Info_Bool_Exp>;
   account_to?: InputMaybe<Int_Comparison_Exp>;
   amount?: InputMaybe<Float8_Comparison_Exp>;
   category?: InputMaybe<Categories_Bool_Exp>;
@@ -6546,9 +7018,11 @@ export type Transactions_Bool_Exp = {
   recurring?: InputMaybe<Recurring_Bool_Exp>;
   recurring_id?: InputMaybe<Bigint_Comparison_Exp>;
   transaction_accounts?: InputMaybe<Transaction_Accounts_Bool_Exp>;
+  transaction_accounts_aggregate?: InputMaybe<Transaction_Accounts_Aggregate_Bool_Exp>;
   transaction_attachment?: InputMaybe<Transaction_Attachments_Bool_Exp>;
   transaction_date?: InputMaybe<Date_Comparison_Exp>;
   transaction_labels?: InputMaybe<Transaction_Labels_Bool_Exp>;
+  transaction_labels_aggregate?: InputMaybe<Transaction_Labels_Aggregate_Bool_Exp>;
   transaction_type?: InputMaybe<Int_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
@@ -6572,7 +7046,9 @@ export type Transactions_Inc_Input = {
 
 /** input type for inserting data into table "transactions" */
 export type Transactions_Insert_Input = {
+  accountInfoByAccountTo?: InputMaybe<Account_Info_Obj_Rel_Insert_Input>;
   account_from?: InputMaybe<Scalars['Int']>;
+  account_info?: InputMaybe<Account_Info_Obj_Rel_Insert_Input>;
   account_to?: InputMaybe<Scalars['Int']>;
   amount?: InputMaybe<Scalars['float8']>;
   category?: InputMaybe<Categories_Obj_Rel_Insert_Input>;
@@ -6677,7 +7153,9 @@ export type Transactions_On_Conflict = {
 
 /** Ordering options when selecting data from "transactions". */
 export type Transactions_Order_By = {
+  accountInfoByAccountTo?: InputMaybe<Account_Info_Order_By>;
   account_from?: InputMaybe<Order_By>;
+  account_info?: InputMaybe<Account_Info_Order_By>;
   account_to?: InputMaybe<Order_By>;
   amount?: InputMaybe<Order_By>;
   category?: InputMaybe<Categories_Order_By>;
@@ -6724,6 +7202,54 @@ export enum Transactions_Select_Column {
   TransactionType = 'transaction_type',
   /** column name */
   UpdatedAt = 'updated_at'
+}
+
+/** select "transactions_aggregate_bool_exp_avg_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Avg_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transactions_aggregate_bool_exp_corr_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Corr_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transactions_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transactions_aggregate_bool_exp_max_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Max_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transactions_aggregate_bool_exp_min_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Min_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transactions_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transactions_aggregate_bool_exp_sum_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Sum_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
+}
+
+/** select "transactions_aggregate_bool_exp_var_samp_arguments_columns" columns of table "transactions" */
+export enum Transactions_Select_Column_Transactions_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns {
+  /** column name */
+  Amount = 'amount'
 }
 
 /** input type for updating data in table "transactions" */

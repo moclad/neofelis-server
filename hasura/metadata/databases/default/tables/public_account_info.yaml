@@ -52,3 +52,17 @@ array_relationships:
         table:
           name: transaction_accounts
           schema: public
+  - name: transactions
+    using:
+      foreign_key_constraint_on:
+        column: account_from
+        table:
+          name: transactions
+          schema: public
+  - name: transactionsByAccountTo
+    using:
+      foreign_key_constraint_on:
+        column: account_to
+        table:
+          name: transactions
+          schema: public
