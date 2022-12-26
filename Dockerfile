@@ -1,35 +1,53 @@
-FROM hasura/graphql-engine:latest
+###################
+# BUILD FOR LOCAL DEVELOPMENT
+###################
 
-# # Copy migrations directory
-COPY ./hasura/migrations /hasura-migrations
+FROM node:19 As development
+RUN curl -fsSL "https://github.com/pnpm/pnpm/releases/latest/download/pnpm-linuxstatic-x64" -o /bin/pnpm; chmod +x /bin/pnpm;
 
-# # Copy metadata directory
-COPY ./hasura/metadata /hasura-metadata
+WORKDIR /usr/src/app
 
-# Enable the console
-ENV HASURA_GRAPHQL_ENABLE_CONSOLE=true
+COPY --chown=node:node pnpm-lock.yaml ./
 
-# https://github.com/hasura/graphql-engine/issues/4651#issuecomment-623414531
-ENV HASURA_GRAPHQL_CLI_ENVIRONMENT=default
+RUN pnpm fetch --prod
 
-ENV HASURA_GRAPHQL_MIGRATIONS_DATABASE_ENV_VAR=DATABASE_URL
+COPY --chown=node:node . .
+RUN pnpm install
 
-# Enable JWT
-ENV HASURA_GRAPHQL_JWT_SECRET=HASURA_GRAPHQL_JWT_SECRET
+USER node
 
-# Secure the GraphQL endpoint
-ENV HASURA_GRAPHQL_ADMIN_SECRET=HASURA_GRAPHQL_ADMIN_SECRET
+###################
+# BUILD FOR PRODUCTION
+###################
 
-ENV HASURA_GRAPHQL_ENABLED_LOG_TYPES="startup, http-log, webhook-log, websocket-log, query-log"
-ENV HASURA_GRAPHQL_UNAUTHORIZED_ROLE=anonymous
-ENV HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS=true
+FROM node:19 As build
+RUN curl -fsSL "https://github.com/pnpm/pnpm/releases/latest/download/pnpm-linuxstatic-x64" -o /bin/pnpm; chmod +x /bin/pnpm;
 
-ENV NEOFELIS_BASE_URL=NEOFELIS_BASE_URL
-ENV NEOFELIS_EVENT_WEBHOOK_ENDPOINT=NEOFELIS_EVENT_WEBHOOK_ENDPOINT
-ENV NEOFELIS_EVENT_WEBHOOK_SHARED_SECRET=NEOFELIS_EVENT_WEBHOOK_SHARED_SECRET
+WORKDIR /usr/src/app
 
+COPY --chown=node:node pnpm-lock.yaml ./
 
-CMD graphql-engine \
-  --database-url $DATABASE_URL \
-  serve \
-  --server-port 8080
+COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
+
+COPY --chown=node:node . .
+
+RUN pnpm build
+
+ENV NODE_ENV production
+
+RUN pnpm install --prod
+
+USER node
+
+###################
+# PRODUCTION
+###################
+
+FROM node:19-alpine As production
+
+ENV NODE_ENV production
+
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+
+CMD [ "node", "dist/main.js" ]

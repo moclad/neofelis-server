@@ -8,6 +8,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 
 import { RecurringModule } from './recurring/recurring.module';
 import { SdkModule } from './sdk/sdk.module';
+import { SensorsModule } from './sensors/sensors.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { SdkModule } from './sdk/sdk.module';
       },
     }),
     RecurringModule,
+    SensorsModule,
   ],
 })
 export class AppModule {}

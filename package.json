@@ -19,8 +19,7 @@
     "hasura": "hasura --project ./hasura --envfile ../.env --skip-update-check",
     "metadata:export": "pnpm run hasura metadata export",
     "metadata:apply": "pnpm run hasura metadata apply",
-    "code-gen": "graphql-codegen",
-    "remote-schema:reload": "ts-node ./scripts/refresh-schema.ts"
+    "code-gen": "graphql-codegen"
   },
   "dependencies": {
     "@golevelup/nestjs-graphql-request": "^0.1.13",
