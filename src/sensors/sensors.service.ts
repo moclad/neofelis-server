@@ -55,7 +55,7 @@ export class SensorsService {
       historyData: statusData,
     });
 
-    return 'This action adds a new sensor';
+    return `Sensor data for ${data.sensor} persisted.`;
   }
 
   private getStatusData(data: CreateSensorDto): Status_Data_Insert_Input[] {

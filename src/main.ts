@@ -14,7 +14,7 @@ async function bootstrap() {
   );
 
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('backend_port');
+  const port = configService.get<number>('backend_port') || 80;
 
   const config = new DocumentBuilder()
     .setTitle('Neofelis Server')
