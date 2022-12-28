@@ -145,6 +145,7 @@ export class SensorsService {
       sensor_name,
       ts,
       stringvalue: 'Sensor updated time',
+      doublevalue: data.time,
       pin: this.UPDATE_TIME_PIN,
     });
 
