@@ -41,6 +41,9 @@ export const getTransactionFromRecurring = (
     description: recurring.title,
     recurring_id: recurring.id,
     transaction_date: dayjs(date).format('YYYY-MM-DD'),
+    account_from: recurring.account_from,
+    account_to: recurring.account_to,
+    transaction_type: recurring.transaction_type,
   };
 
   const source = {
