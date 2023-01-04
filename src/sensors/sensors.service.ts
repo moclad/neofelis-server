@@ -61,7 +61,7 @@ export class SensorsService {
   private getStatusData(data: CreateSensorDto): Status_Data_Insert_Input[] {
     const statusData: Status_Data_Insert_Input[] = [];
 
-    const ts = dayjs.unix(data.time).utc().format();
+    const ts = dayjs.utc().format();
     const sensor_name = data.sensor;
 
     statusData.push({
