@@ -11,7 +11,7 @@ import { CreateSensorDto } from './dto/create-sensor.dto';
 gql`
   mutation insertStatusData(
     $statusData: [status_data_insert_input!]!
-    $historyData: [historical_data_insert_input!]!
+    $historyData: [old_historical_data_insert_input!]!
   ) {
     insert_status_data(
       objects: $statusData
@@ -22,7 +22,7 @@ gql`
     ) {
       affected_rows
     }
-    insert_historical_data(objects: $historyData) {
+    insert_old_historical_data(objects: $historyData) {
       affected_rows
     }
   }
