@@ -154,7 +154,7 @@ export class SensorsService {
     statusData.push({
       sensor_name,
       ts,
-      stringvalue: 'Sensor updated time',
+      stringvalue: `Sensor updated time ${ts}`,
       doublevalue: data.time,
       pin: this.UPDATE_TIME_PIN,
     });
