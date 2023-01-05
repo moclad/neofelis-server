@@ -8926,11 +8926,11 @@ export type InsertNotificationMutation = { __typename?: 'mutation_root', insert_
 
 export type InsertStatusDataMutationVariables = Exact<{
   statusData: Array<Status_Data_Insert_Input> | Status_Data_Insert_Input;
-  historyData: Array<Old_Historical_Data_Insert_Input> | Old_Historical_Data_Insert_Input;
+  historyData: Array<Historical_Data_Insert_Input> | Historical_Data_Insert_Input;
 }>;
 
 
-export type InsertStatusDataMutation = { __typename?: 'mutation_root', insert_status_data: { __typename?: 'status_data_mutation_response', affected_rows: number } | null, insert_old_historical_data: { __typename?: 'old_historical_data_mutation_response', affected_rows: number } | null };
+export type InsertStatusDataMutation = { __typename?: 'mutation_root', insert_status_data: { __typename?: 'status_data_mutation_response', affected_rows: number } | null, insert_historical_data: { __typename?: 'historical_data_mutation_response', affected_rows: number } | null };
 
 
 export const GetRecurringItemsDocument = gql`
@@ -8981,14 +8981,14 @@ export const InsertNotificationDocument = gql`
 }
     `;
 export const InsertStatusDataDocument = gql`
-    mutation insertStatusData($statusData: [status_data_insert_input!]!, $historyData: [old_historical_data_insert_input!]!) {
+    mutation insertStatusData($statusData: [status_data_insert_input!]!, $historyData: [historical_data_insert_input!]!) {
   insert_status_data(
     objects: $statusData
     on_conflict: {constraint: status_data_pkey, update_columns: [doublevalue, ts, stringvalue]}
   ) {
     affected_rows
   }
-  insert_old_historical_data(objects: $historyData) {
+  insert_historical_data(objects: $historyData) {
     affected_rows
   }
 }

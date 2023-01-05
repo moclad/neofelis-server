@@ -4,14 +4,14 @@ import { gql } from 'graphql-request';
 
 import { Injectable } from '@nestjs/common';
 
-import { Status_Data_Insert_Input } from '../sdk/sdk';
+import { Historical_Data_Insert_Input, Status_Data_Insert_Input } from '../sdk/sdk';
 import { GqlSdk, InjectSdk } from '../sdk/sdk.module';
 import { CreateSensorDto } from './dto/create-sensor.dto';
 
 gql`
   mutation insertStatusData(
     $statusData: [status_data_insert_input!]!
-    $historyData: [old_historical_data_insert_input!]!
+    $historyData: [historical_data_insert_input!]!
   ) {
     insert_status_data(
       objects: $statusData
@@ -22,7 +22,7 @@ gql`
     ) {
       affected_rows
     }
-    insert_old_historical_data(objects: $historyData) {
+    insert_historical_data(objects: $historyData) {
       affected_rows
     }
   }
@@ -49,10 +49,20 @@ export class SensorsService {
 
   public create(data: CreateSensorDto) {
     const statusData = this.getStatusData(data);
+    const historyData: Historical_Data_Insert_Input = {
+      sensor_name: data.sensor,
+      absolute_pressure: data.pressure,
+      battery: data.volt,
+      humidity: data.humidity,
+      relative_pressure: data.rel_pressure,
+      temperature: data.temperature,
+      ts: dayjs.utc().format(),
+      zambretti: data.zambretti,
+    };
 
     this.sdk.insertStatusData({
       statusData,
-      historyData: statusData,
+      historyData,
     });
 
     return `Sensor data for ${data.sensor} persisted.`;
