@@ -72,6 +72,7 @@ export class SensorsService {
     const statusData: Status_Data_Insert_Input[] = [];
 
     const ts = dayjs.utc().format();
+    const local = dayjs().local().format()
     const sensor_name = data.sensor;
 
     statusData.push({
@@ -154,7 +155,7 @@ export class SensorsService {
     statusData.push({
       sensor_name,
       ts,
-      stringvalue: `Sensor updated time ${ts}`,
+      stringvalue: `Sensor updated time ${local}`,
       doublevalue: data.time,
       pin: this.UPDATE_TIME_PIN,
     });
