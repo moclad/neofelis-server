@@ -4,8 +4,12 @@ import { HasuraModule } from '@golevelup/nestjs-hasura';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { RecurringModule } from './recurring/recurring.module';
 import { SdkModule } from './sdk/sdk.module';
 import { SensorsModule } from './sensors/sensors.module';
@@ -64,8 +68,20 @@ import { SensorsModule } from './sensors/sensors.module';
         };
       },
     }),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
     RecurringModule,
     SensorsModule,
+  ],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule {}
