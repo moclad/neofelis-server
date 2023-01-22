@@ -47,7 +47,7 @@ export class SensorsService {
     dayjs.extend(utc);
   }
 
-  public create(data: CreateSensorDto) {
+  public insertSensorData(data: CreateSensorDto) {
     const statusData = this.getStatusData(data);
     const historyData: Historical_Data_Insert_Input = {
       sensor_name: data.sensor,

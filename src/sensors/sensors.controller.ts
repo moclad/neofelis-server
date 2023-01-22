@@ -10,7 +10,12 @@ export class SensorsController {
   constructor(private readonly sensorsService: SensorsService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create sensor data' })
+  @ApiOperation({ summary: 'Insert sensor data' })
+  create(@Body() createSensorDto: CreateSensorDto) {
+    return this.sensorsService.create(createSensorDto);
+  }
+  @Post()
+  @ApiOperation({ summary: 'Insert sensor data' })
   create(@Body() createSensorDto: CreateSensorDto) {
     return this.sensorsService.create(createSensorDto);
   }
