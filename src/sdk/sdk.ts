@@ -460,6 +460,7 @@ export type Account_Info_Updates = {
   _inc?: InputMaybe<Account_Info_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Account_Info_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Account_Info_Bool_Exp;
 };
 
@@ -754,6 +755,7 @@ export type Assets_Updates = {
   _inc?: InputMaybe<Assets_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Assets_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Assets_Bool_Exp;
 };
 
@@ -1096,6 +1098,7 @@ export type Categories_Updates = {
   _inc?: InputMaybe<Categories_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Categories_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Categories_Bool_Exp;
 };
 
@@ -1359,6 +1362,7 @@ export type Expenses_Updates = {
   _inc?: InputMaybe<Expenses_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Expenses_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Expenses_Bool_Exp;
 };
 
@@ -1393,12 +1397,256 @@ export type Float8_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['float8']>>;
 };
 
+/** columns and relationships of "gauge_data" */
+export type Gauge_Data = {
+  __typename?: 'gauge_data';
+  battery: Maybe<Scalars['float8']>;
+  id: Scalars['uuid'];
+  sensor_name: Scalars['String'];
+  tick: Scalars['float8'];
+  ts: Scalars['timestamp'];
+};
+
+/** aggregated selection of "gauge_data" */
+export type Gauge_Data_Aggregate = {
+  __typename?: 'gauge_data_aggregate';
+  aggregate: Maybe<Gauge_Data_Aggregate_Fields>;
+  nodes: Array<Gauge_Data>;
+};
+
+/** aggregate fields of "gauge_data" */
+export type Gauge_Data_Aggregate_Fields = {
+  __typename?: 'gauge_data_aggregate_fields';
+  avg: Maybe<Gauge_Data_Avg_Fields>;
+  count: Scalars['Int'];
+  max: Maybe<Gauge_Data_Max_Fields>;
+  min: Maybe<Gauge_Data_Min_Fields>;
+  stddev: Maybe<Gauge_Data_Stddev_Fields>;
+  stddev_pop: Maybe<Gauge_Data_Stddev_Pop_Fields>;
+  stddev_samp: Maybe<Gauge_Data_Stddev_Samp_Fields>;
+  sum: Maybe<Gauge_Data_Sum_Fields>;
+  var_pop: Maybe<Gauge_Data_Var_Pop_Fields>;
+  var_samp: Maybe<Gauge_Data_Var_Samp_Fields>;
+  variance: Maybe<Gauge_Data_Variance_Fields>;
+};
+
+
+/** aggregate fields of "gauge_data" */
+export type Gauge_Data_Aggregate_FieldsCountArgs = {
+  columns: InputMaybe<Array<Gauge_Data_Select_Column>>;
+  distinct: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Gauge_Data_Avg_Fields = {
+  __typename?: 'gauge_data_avg_fields';
+  battery: Maybe<Scalars['Float']>;
+  tick: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "gauge_data". All fields are combined with a logical 'AND'. */
+export type Gauge_Data_Bool_Exp = {
+  _and?: InputMaybe<Array<Gauge_Data_Bool_Exp>>;
+  _not?: InputMaybe<Gauge_Data_Bool_Exp>;
+  _or?: InputMaybe<Array<Gauge_Data_Bool_Exp>>;
+  battery?: InputMaybe<Float8_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  sensor_name?: InputMaybe<String_Comparison_Exp>;
+  tick?: InputMaybe<Float8_Comparison_Exp>;
+  ts?: InputMaybe<Timestamp_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "gauge_data" */
+export enum Gauge_Data_Constraint {
+  /** unique or primary key constraint on columns "ts", "id" */
+  GaugeDataPkey = 'gauge_data_pkey'
+}
+
+/** input type for incrementing numeric columns in table "gauge_data" */
+export type Gauge_Data_Inc_Input = {
+  battery?: InputMaybe<Scalars['float8']>;
+  tick?: InputMaybe<Scalars['float8']>;
+};
+
+/** input type for inserting data into table "gauge_data" */
+export type Gauge_Data_Insert_Input = {
+  battery?: InputMaybe<Scalars['float8']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  sensor_name?: InputMaybe<Scalars['String']>;
+  tick?: InputMaybe<Scalars['float8']>;
+  ts?: InputMaybe<Scalars['timestamp']>;
+};
+
+/** aggregate max on columns */
+export type Gauge_Data_Max_Fields = {
+  __typename?: 'gauge_data_max_fields';
+  battery: Maybe<Scalars['float8']>;
+  id: Maybe<Scalars['uuid']>;
+  sensor_name: Maybe<Scalars['String']>;
+  tick: Maybe<Scalars['float8']>;
+  ts: Maybe<Scalars['timestamp']>;
+};
+
+/** aggregate min on columns */
+export type Gauge_Data_Min_Fields = {
+  __typename?: 'gauge_data_min_fields';
+  battery: Maybe<Scalars['float8']>;
+  id: Maybe<Scalars['uuid']>;
+  sensor_name: Maybe<Scalars['String']>;
+  tick: Maybe<Scalars['float8']>;
+  ts: Maybe<Scalars['timestamp']>;
+};
+
+/** response of any mutation on the table "gauge_data" */
+export type Gauge_Data_Mutation_Response = {
+  __typename?: 'gauge_data_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Gauge_Data>;
+};
+
+/** on_conflict condition type for table "gauge_data" */
+export type Gauge_Data_On_Conflict = {
+  constraint: Gauge_Data_Constraint;
+  update_columns?: Array<Gauge_Data_Update_Column>;
+  where?: InputMaybe<Gauge_Data_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "gauge_data". */
+export type Gauge_Data_Order_By = {
+  battery?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  sensor_name?: InputMaybe<Order_By>;
+  tick?: InputMaybe<Order_By>;
+  ts?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: gauge_data */
+export type Gauge_Data_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
+};
+
+/** select columns of table "gauge_data" */
+export enum Gauge_Data_Select_Column {
+  /** column name */
+  Battery = 'battery',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  SensorName = 'sensor_name',
+  /** column name */
+  Tick = 'tick',
+  /** column name */
+  Ts = 'ts'
+}
+
+/** input type for updating data in table "gauge_data" */
+export type Gauge_Data_Set_Input = {
+  battery?: InputMaybe<Scalars['float8']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  sensor_name?: InputMaybe<Scalars['String']>;
+  tick?: InputMaybe<Scalars['float8']>;
+  ts?: InputMaybe<Scalars['timestamp']>;
+};
+
+/** aggregate stddev on columns */
+export type Gauge_Data_Stddev_Fields = {
+  __typename?: 'gauge_data_stddev_fields';
+  battery: Maybe<Scalars['Float']>;
+  tick: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Gauge_Data_Stddev_Pop_Fields = {
+  __typename?: 'gauge_data_stddev_pop_fields';
+  battery: Maybe<Scalars['Float']>;
+  tick: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Gauge_Data_Stddev_Samp_Fields = {
+  __typename?: 'gauge_data_stddev_samp_fields';
+  battery: Maybe<Scalars['Float']>;
+  tick: Maybe<Scalars['Float']>;
+};
+
+/** Streaming cursor of the table "gauge_data" */
+export type Gauge_Data_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Gauge_Data_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Gauge_Data_Stream_Cursor_Value_Input = {
+  battery?: InputMaybe<Scalars['float8']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  sensor_name?: InputMaybe<Scalars['String']>;
+  tick?: InputMaybe<Scalars['float8']>;
+  ts?: InputMaybe<Scalars['timestamp']>;
+};
+
+/** aggregate sum on columns */
+export type Gauge_Data_Sum_Fields = {
+  __typename?: 'gauge_data_sum_fields';
+  battery: Maybe<Scalars['float8']>;
+  tick: Maybe<Scalars['float8']>;
+};
+
+/** update columns of table "gauge_data" */
+export enum Gauge_Data_Update_Column {
+  /** column name */
+  Battery = 'battery',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  SensorName = 'sensor_name',
+  /** column name */
+  Tick = 'tick',
+  /** column name */
+  Ts = 'ts'
+}
+
+export type Gauge_Data_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Gauge_Data_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Gauge_Data_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Gauge_Data_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Gauge_Data_Var_Pop_Fields = {
+  __typename?: 'gauge_data_var_pop_fields';
+  battery: Maybe<Scalars['Float']>;
+  tick: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Gauge_Data_Var_Samp_Fields = {
+  __typename?: 'gauge_data_var_samp_fields';
+  battery: Maybe<Scalars['Float']>;
+  tick: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Gauge_Data_Variance_Fields = {
+  __typename?: 'gauge_data_variance_fields';
+  battery: Maybe<Scalars['Float']>;
+  tick: Maybe<Scalars['Float']>;
+};
+
 /** columns and relationships of "historical_data" */
 export type Historical_Data = {
   __typename?: 'historical_data';
   absolute_pressure: Maybe<Scalars['float8']>;
   battery: Maybe<Scalars['float8']>;
   humidity: Maybe<Scalars['float8']>;
+  id: Scalars['uuid'];
   relative_pressure: Maybe<Scalars['float8']>;
   sensor_name: Scalars['String'];
   temperature: Maybe<Scalars['float8']>;
@@ -1454,12 +1702,21 @@ export type Historical_Data_Bool_Exp = {
   absolute_pressure?: InputMaybe<Float8_Comparison_Exp>;
   battery?: InputMaybe<Float8_Comparison_Exp>;
   humidity?: InputMaybe<Float8_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
   relative_pressure?: InputMaybe<Float8_Comparison_Exp>;
   sensor_name?: InputMaybe<String_Comparison_Exp>;
   temperature?: InputMaybe<Float8_Comparison_Exp>;
   ts?: InputMaybe<Timestamp_Comparison_Exp>;
   zambretti?: InputMaybe<String_Comparison_Exp>;
 };
+
+/** unique or primary key constraints on table "historical_data" */
+export enum Historical_Data_Constraint {
+  /** unique or primary key constraint on columns "ts", "id" */
+  HistoricalDataIdTsKey = 'historical_data_id_ts_key',
+  /** unique or primary key constraint on columns "ts", "id" */
+  HistoricalDataPkey = 'historical_data_pkey'
+}
 
 /** input type for incrementing numeric columns in table "historical_data" */
 export type Historical_Data_Inc_Input = {
@@ -1475,6 +1732,7 @@ export type Historical_Data_Insert_Input = {
   absolute_pressure?: InputMaybe<Scalars['float8']>;
   battery?: InputMaybe<Scalars['float8']>;
   humidity?: InputMaybe<Scalars['float8']>;
+  id?: InputMaybe<Scalars['uuid']>;
   relative_pressure?: InputMaybe<Scalars['float8']>;
   sensor_name?: InputMaybe<Scalars['String']>;
   temperature?: InputMaybe<Scalars['float8']>;
@@ -1488,6 +1746,7 @@ export type Historical_Data_Max_Fields = {
   absolute_pressure: Maybe<Scalars['float8']>;
   battery: Maybe<Scalars['float8']>;
   humidity: Maybe<Scalars['float8']>;
+  id: Maybe<Scalars['uuid']>;
   relative_pressure: Maybe<Scalars['float8']>;
   sensor_name: Maybe<Scalars['String']>;
   temperature: Maybe<Scalars['float8']>;
@@ -1501,6 +1760,7 @@ export type Historical_Data_Min_Fields = {
   absolute_pressure: Maybe<Scalars['float8']>;
   battery: Maybe<Scalars['float8']>;
   humidity: Maybe<Scalars['float8']>;
+  id: Maybe<Scalars['uuid']>;
   relative_pressure: Maybe<Scalars['float8']>;
   sensor_name: Maybe<Scalars['String']>;
   temperature: Maybe<Scalars['float8']>;
@@ -1517,16 +1777,30 @@ export type Historical_Data_Mutation_Response = {
   returning: Array<Historical_Data>;
 };
 
+/** on_conflict condition type for table "historical_data" */
+export type Historical_Data_On_Conflict = {
+  constraint: Historical_Data_Constraint;
+  update_columns?: Array<Historical_Data_Update_Column>;
+  where?: InputMaybe<Historical_Data_Bool_Exp>;
+};
+
 /** Ordering options when selecting data from "historical_data". */
 export type Historical_Data_Order_By = {
   absolute_pressure?: InputMaybe<Order_By>;
   battery?: InputMaybe<Order_By>;
   humidity?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
   relative_pressure?: InputMaybe<Order_By>;
   sensor_name?: InputMaybe<Order_By>;
   temperature?: InputMaybe<Order_By>;
   ts?: InputMaybe<Order_By>;
   zambretti?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: historical_data */
+export type Historical_Data_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
 };
 
 /** select columns of table "historical_data" */
@@ -1537,6 +1811,8 @@ export enum Historical_Data_Select_Column {
   Battery = 'battery',
   /** column name */
   Humidity = 'humidity',
+  /** column name */
+  Id = 'id',
   /** column name */
   RelativePressure = 'relative_pressure',
   /** column name */
@@ -1554,6 +1830,7 @@ export type Historical_Data_Set_Input = {
   absolute_pressure?: InputMaybe<Scalars['float8']>;
   battery?: InputMaybe<Scalars['float8']>;
   humidity?: InputMaybe<Scalars['float8']>;
+  id?: InputMaybe<Scalars['uuid']>;
   relative_pressure?: InputMaybe<Scalars['float8']>;
   sensor_name?: InputMaybe<Scalars['String']>;
   temperature?: InputMaybe<Scalars['float8']>;
@@ -1604,6 +1881,7 @@ export type Historical_Data_Stream_Cursor_Value_Input = {
   absolute_pressure?: InputMaybe<Scalars['float8']>;
   battery?: InputMaybe<Scalars['float8']>;
   humidity?: InputMaybe<Scalars['float8']>;
+  id?: InputMaybe<Scalars['uuid']>;
   relative_pressure?: InputMaybe<Scalars['float8']>;
   sensor_name?: InputMaybe<Scalars['String']>;
   temperature?: InputMaybe<Scalars['float8']>;
@@ -1621,11 +1899,34 @@ export type Historical_Data_Sum_Fields = {
   temperature: Maybe<Scalars['float8']>;
 };
 
+/** update columns of table "historical_data" */
+export enum Historical_Data_Update_Column {
+  /** column name */
+  AbsolutePressure = 'absolute_pressure',
+  /** column name */
+  Battery = 'battery',
+  /** column name */
+  Humidity = 'humidity',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  RelativePressure = 'relative_pressure',
+  /** column name */
+  SensorName = 'sensor_name',
+  /** column name */
+  Temperature = 'temperature',
+  /** column name */
+  Ts = 'ts',
+  /** column name */
+  Zambretti = 'zambretti'
+}
+
 export type Historical_Data_Updates = {
   /** increments the numeric columns with given value of the filtered values */
   _inc?: InputMaybe<Historical_Data_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Historical_Data_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Historical_Data_Bool_Exp;
 };
 
@@ -1921,6 +2222,7 @@ export type Labels_Updates = {
   _inc?: InputMaybe<Labels_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Labels_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Labels_Bool_Exp;
 };
 
@@ -2163,6 +2465,7 @@ export type Liabilities_Updates = {
   _inc?: InputMaybe<Liabilities_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Liabilities_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Liabilities_Bool_Exp;
 };
 
@@ -2203,8 +2506,14 @@ export type Mutation_Root = {
   delete_expenses: Maybe<Expenses_Mutation_Response>;
   /** delete single row from the table: "expenses" */
   delete_expenses_by_pk: Maybe<Expenses>;
+  /** delete data from the table: "gauge_data" */
+  delete_gauge_data: Maybe<Gauge_Data_Mutation_Response>;
+  /** delete single row from the table: "gauge_data" */
+  delete_gauge_data_by_pk: Maybe<Gauge_Data>;
   /** delete data from the table: "historical_data" */
   delete_historical_data: Maybe<Historical_Data_Mutation_Response>;
+  /** delete single row from the table: "historical_data" */
+  delete_historical_data_by_pk: Maybe<Historical_Data>;
   /** delete data from the table: "labels" */
   delete_labels: Maybe<Labels_Mutation_Response>;
   /** delete single row from the table: "labels" */
@@ -2217,8 +2526,6 @@ export type Mutation_Root = {
   delete_notifications: Maybe<Notifications_Mutation_Response>;
   /** delete single row from the table: "notifications" */
   delete_notifications_by_pk: Maybe<Notifications>;
-  /** delete data from the table: "old_historical_data" */
-  delete_old_historical_data: Maybe<Old_Historical_Data_Mutation_Response>;
   /** delete data from the table: "recurring" */
   delete_recurring: Maybe<Recurring_Mutation_Response>;
   /** delete single row from the table: "recurring" */
@@ -2275,6 +2582,10 @@ export type Mutation_Root = {
   insert_expenses: Maybe<Expenses_Mutation_Response>;
   /** insert a single row into the table: "expenses" */
   insert_expenses_one: Maybe<Expenses>;
+  /** insert data into the table: "gauge_data" */
+  insert_gauge_data: Maybe<Gauge_Data_Mutation_Response>;
+  /** insert a single row into the table: "gauge_data" */
+  insert_gauge_data_one: Maybe<Gauge_Data>;
   /** insert data into the table: "historical_data" */
   insert_historical_data: Maybe<Historical_Data_Mutation_Response>;
   /** insert a single row into the table: "historical_data" */
@@ -2291,10 +2602,6 @@ export type Mutation_Root = {
   insert_notifications: Maybe<Notifications_Mutation_Response>;
   /** insert a single row into the table: "notifications" */
   insert_notifications_one: Maybe<Notifications>;
-  /** insert data into the table: "old_historical_data" */
-  insert_old_historical_data: Maybe<Old_Historical_Data_Mutation_Response>;
-  /** insert a single row into the table: "old_historical_data" */
-  insert_old_historical_data_one: Maybe<Old_Historical_Data>;
   /** insert data into the table: "recurring" */
   insert_recurring: Maybe<Recurring_Mutation_Response>;
   /** insert data into the table: "recurring_labels" */
@@ -2359,8 +2666,16 @@ export type Mutation_Root = {
   update_expenses_by_pk: Maybe<Expenses>;
   /** update multiples rows of table: "expenses" */
   update_expenses_many: Maybe<Array<Maybe<Expenses_Mutation_Response>>>;
+  /** update data of the table: "gauge_data" */
+  update_gauge_data: Maybe<Gauge_Data_Mutation_Response>;
+  /** update single row of the table: "gauge_data" */
+  update_gauge_data_by_pk: Maybe<Gauge_Data>;
+  /** update multiples rows of table: "gauge_data" */
+  update_gauge_data_many: Maybe<Array<Maybe<Gauge_Data_Mutation_Response>>>;
   /** update data of the table: "historical_data" */
   update_historical_data: Maybe<Historical_Data_Mutation_Response>;
+  /** update single row of the table: "historical_data" */
+  update_historical_data_by_pk: Maybe<Historical_Data>;
   /** update multiples rows of table: "historical_data" */
   update_historical_data_many: Maybe<Array<Maybe<Historical_Data_Mutation_Response>>>;
   /** update data of the table: "labels" */
@@ -2381,10 +2696,6 @@ export type Mutation_Root = {
   update_notifications_by_pk: Maybe<Notifications>;
   /** update multiples rows of table: "notifications" */
   update_notifications_many: Maybe<Array<Maybe<Notifications_Mutation_Response>>>;
-  /** update data of the table: "old_historical_data" */
-  update_old_historical_data: Maybe<Old_Historical_Data_Mutation_Response>;
-  /** update multiples rows of table: "old_historical_data" */
-  update_old_historical_data_many: Maybe<Array<Maybe<Old_Historical_Data_Mutation_Response>>>;
   /** update data of the table: "recurring" */
   update_recurring: Maybe<Recurring_Mutation_Response>;
   /** update single row of the table: "recurring" */
@@ -2497,8 +2808,28 @@ export type Mutation_RootDelete_Expenses_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Gauge_DataArgs = {
+  where: Gauge_Data_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Gauge_Data_By_PkArgs = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Historical_DataArgs = {
   where: Historical_Data_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Historical_Data_By_PkArgs = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
 };
 
 
@@ -2535,12 +2866,6 @@ export type Mutation_RootDelete_NotificationsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Notifications_By_PkArgs = {
   id: Scalars['Int'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Old_Historical_DataArgs = {
-  where: Old_Historical_Data_Bool_Exp;
 };
 
 
@@ -2725,14 +3050,30 @@ export type Mutation_RootInsert_Expenses_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Gauge_DataArgs = {
+  objects: Array<Gauge_Data_Insert_Input>;
+  on_conflict: InputMaybe<Gauge_Data_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Gauge_Data_OneArgs = {
+  object: Gauge_Data_Insert_Input;
+  on_conflict: InputMaybe<Gauge_Data_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Historical_DataArgs = {
   objects: Array<Historical_Data_Insert_Input>;
+  on_conflict: InputMaybe<Historical_Data_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Historical_Data_OneArgs = {
   object: Historical_Data_Insert_Input;
+  on_conflict: InputMaybe<Historical_Data_On_Conflict>;
 };
 
 
@@ -2775,18 +3116,6 @@ export type Mutation_RootInsert_NotificationsArgs = {
 export type Mutation_RootInsert_Notifications_OneArgs = {
   object: Notifications_Insert_Input;
   on_conflict: InputMaybe<Notifications_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Old_Historical_DataArgs = {
-  objects: Array<Old_Historical_Data_Insert_Input>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Old_Historical_Data_OneArgs = {
-  object: Old_Historical_Data_Insert_Input;
 };
 
 
@@ -3019,10 +3348,40 @@ export type Mutation_RootUpdate_Expenses_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Gauge_DataArgs = {
+  _inc: InputMaybe<Gauge_Data_Inc_Input>;
+  _set: InputMaybe<Gauge_Data_Set_Input>;
+  where: Gauge_Data_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gauge_Data_By_PkArgs = {
+  _inc: InputMaybe<Gauge_Data_Inc_Input>;
+  _set: InputMaybe<Gauge_Data_Set_Input>;
+  pk_columns: Gauge_Data_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Gauge_Data_ManyArgs = {
+  updates: Array<Gauge_Data_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Historical_DataArgs = {
   _inc: InputMaybe<Historical_Data_Inc_Input>;
   _set: InputMaybe<Historical_Data_Set_Input>;
   where: Historical_Data_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Historical_Data_By_PkArgs = {
+  _inc: InputMaybe<Historical_Data_Inc_Input>;
+  _set: InputMaybe<Historical_Data_Set_Input>;
+  pk_columns: Historical_Data_Pk_Columns_Input;
 };
 
 
@@ -3095,20 +3454,6 @@ export type Mutation_RootUpdate_Notifications_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Notifications_ManyArgs = {
   updates: Array<Notifications_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Old_Historical_DataArgs = {
-  _inc: InputMaybe<Old_Historical_Data_Inc_Input>;
-  _set: InputMaybe<Old_Historical_Data_Set_Input>;
-  where: Old_Historical_Data_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Old_Historical_Data_ManyArgs = {
-  updates: Array<Old_Historical_Data_Updates>;
 };
 
 
@@ -3560,6 +3905,7 @@ export type Notifications_Updates = {
   _inc?: InputMaybe<Notifications_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Notifications_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Notifications_Bool_Exp;
 };
 
@@ -3579,215 +3925,6 @@ export type Notifications_Var_Samp_Fields = {
 export type Notifications_Variance_Fields = {
   __typename?: 'notifications_variance_fields';
   id: Maybe<Scalars['Float']>;
-};
-
-/** columns and relationships of "old_historical_data" */
-export type Old_Historical_Data = {
-  __typename?: 'old_historical_data';
-  doublevalue: Maybe<Scalars['float8']>;
-  pin: Scalars['smallint'];
-  sensor_name: Scalars['String'];
-  stringvalue: Maybe<Scalars['String']>;
-  ts: Scalars['timestamp'];
-};
-
-/** aggregated selection of "old_historical_data" */
-export type Old_Historical_Data_Aggregate = {
-  __typename?: 'old_historical_data_aggregate';
-  aggregate: Maybe<Old_Historical_Data_Aggregate_Fields>;
-  nodes: Array<Old_Historical_Data>;
-};
-
-/** aggregate fields of "old_historical_data" */
-export type Old_Historical_Data_Aggregate_Fields = {
-  __typename?: 'old_historical_data_aggregate_fields';
-  avg: Maybe<Old_Historical_Data_Avg_Fields>;
-  count: Scalars['Int'];
-  max: Maybe<Old_Historical_Data_Max_Fields>;
-  min: Maybe<Old_Historical_Data_Min_Fields>;
-  stddev: Maybe<Old_Historical_Data_Stddev_Fields>;
-  stddev_pop: Maybe<Old_Historical_Data_Stddev_Pop_Fields>;
-  stddev_samp: Maybe<Old_Historical_Data_Stddev_Samp_Fields>;
-  sum: Maybe<Old_Historical_Data_Sum_Fields>;
-  var_pop: Maybe<Old_Historical_Data_Var_Pop_Fields>;
-  var_samp: Maybe<Old_Historical_Data_Var_Samp_Fields>;
-  variance: Maybe<Old_Historical_Data_Variance_Fields>;
-};
-
-
-/** aggregate fields of "old_historical_data" */
-export type Old_Historical_Data_Aggregate_FieldsCountArgs = {
-  columns: InputMaybe<Array<Old_Historical_Data_Select_Column>>;
-  distinct: InputMaybe<Scalars['Boolean']>;
-};
-
-/** aggregate avg on columns */
-export type Old_Historical_Data_Avg_Fields = {
-  __typename?: 'old_historical_data_avg_fields';
-  doublevalue: Maybe<Scalars['Float']>;
-  pin: Maybe<Scalars['Float']>;
-};
-
-/** Boolean expression to filter rows from the table "old_historical_data". All fields are combined with a logical 'AND'. */
-export type Old_Historical_Data_Bool_Exp = {
-  _and?: InputMaybe<Array<Old_Historical_Data_Bool_Exp>>;
-  _not?: InputMaybe<Old_Historical_Data_Bool_Exp>;
-  _or?: InputMaybe<Array<Old_Historical_Data_Bool_Exp>>;
-  doublevalue?: InputMaybe<Float8_Comparison_Exp>;
-  pin?: InputMaybe<Smallint_Comparison_Exp>;
-  sensor_name?: InputMaybe<String_Comparison_Exp>;
-  stringvalue?: InputMaybe<String_Comparison_Exp>;
-  ts?: InputMaybe<Timestamp_Comparison_Exp>;
-};
-
-/** input type for incrementing numeric columns in table "old_historical_data" */
-export type Old_Historical_Data_Inc_Input = {
-  doublevalue?: InputMaybe<Scalars['float8']>;
-  pin?: InputMaybe<Scalars['smallint']>;
-};
-
-/** input type for inserting data into table "old_historical_data" */
-export type Old_Historical_Data_Insert_Input = {
-  doublevalue?: InputMaybe<Scalars['float8']>;
-  pin?: InputMaybe<Scalars['smallint']>;
-  sensor_name?: InputMaybe<Scalars['String']>;
-  stringvalue?: InputMaybe<Scalars['String']>;
-  ts?: InputMaybe<Scalars['timestamp']>;
-};
-
-/** aggregate max on columns */
-export type Old_Historical_Data_Max_Fields = {
-  __typename?: 'old_historical_data_max_fields';
-  doublevalue: Maybe<Scalars['float8']>;
-  pin: Maybe<Scalars['smallint']>;
-  sensor_name: Maybe<Scalars['String']>;
-  stringvalue: Maybe<Scalars['String']>;
-  ts: Maybe<Scalars['timestamp']>;
-};
-
-/** aggregate min on columns */
-export type Old_Historical_Data_Min_Fields = {
-  __typename?: 'old_historical_data_min_fields';
-  doublevalue: Maybe<Scalars['float8']>;
-  pin: Maybe<Scalars['smallint']>;
-  sensor_name: Maybe<Scalars['String']>;
-  stringvalue: Maybe<Scalars['String']>;
-  ts: Maybe<Scalars['timestamp']>;
-};
-
-/** response of any mutation on the table "old_historical_data" */
-export type Old_Historical_Data_Mutation_Response = {
-  __typename?: 'old_historical_data_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Old_Historical_Data>;
-};
-
-/** Ordering options when selecting data from "old_historical_data". */
-export type Old_Historical_Data_Order_By = {
-  doublevalue?: InputMaybe<Order_By>;
-  pin?: InputMaybe<Order_By>;
-  sensor_name?: InputMaybe<Order_By>;
-  stringvalue?: InputMaybe<Order_By>;
-  ts?: InputMaybe<Order_By>;
-};
-
-/** select columns of table "old_historical_data" */
-export enum Old_Historical_Data_Select_Column {
-  /** column name */
-  Doublevalue = 'doublevalue',
-  /** column name */
-  Pin = 'pin',
-  /** column name */
-  SensorName = 'sensor_name',
-  /** column name */
-  Stringvalue = 'stringvalue',
-  /** column name */
-  Ts = 'ts'
-}
-
-/** input type for updating data in table "old_historical_data" */
-export type Old_Historical_Data_Set_Input = {
-  doublevalue?: InputMaybe<Scalars['float8']>;
-  pin?: InputMaybe<Scalars['smallint']>;
-  sensor_name?: InputMaybe<Scalars['String']>;
-  stringvalue?: InputMaybe<Scalars['String']>;
-  ts?: InputMaybe<Scalars['timestamp']>;
-};
-
-/** aggregate stddev on columns */
-export type Old_Historical_Data_Stddev_Fields = {
-  __typename?: 'old_historical_data_stddev_fields';
-  doublevalue: Maybe<Scalars['Float']>;
-  pin: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Old_Historical_Data_Stddev_Pop_Fields = {
-  __typename?: 'old_historical_data_stddev_pop_fields';
-  doublevalue: Maybe<Scalars['Float']>;
-  pin: Maybe<Scalars['Float']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Old_Historical_Data_Stddev_Samp_Fields = {
-  __typename?: 'old_historical_data_stddev_samp_fields';
-  doublevalue: Maybe<Scalars['Float']>;
-  pin: Maybe<Scalars['Float']>;
-};
-
-/** Streaming cursor of the table "old_historical_data" */
-export type Old_Historical_Data_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Old_Historical_Data_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Old_Historical_Data_Stream_Cursor_Value_Input = {
-  doublevalue?: InputMaybe<Scalars['float8']>;
-  pin?: InputMaybe<Scalars['smallint']>;
-  sensor_name?: InputMaybe<Scalars['String']>;
-  stringvalue?: InputMaybe<Scalars['String']>;
-  ts?: InputMaybe<Scalars['timestamp']>;
-};
-
-/** aggregate sum on columns */
-export type Old_Historical_Data_Sum_Fields = {
-  __typename?: 'old_historical_data_sum_fields';
-  doublevalue: Maybe<Scalars['float8']>;
-  pin: Maybe<Scalars['smallint']>;
-};
-
-export type Old_Historical_Data_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Old_Historical_Data_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Old_Historical_Data_Set_Input>;
-  where: Old_Historical_Data_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Old_Historical_Data_Var_Pop_Fields = {
-  __typename?: 'old_historical_data_var_pop_fields';
-  doublevalue: Maybe<Scalars['Float']>;
-  pin: Maybe<Scalars['Float']>;
-};
-
-/** aggregate var_samp on columns */
-export type Old_Historical_Data_Var_Samp_Fields = {
-  __typename?: 'old_historical_data_var_samp_fields';
-  doublevalue: Maybe<Scalars['Float']>;
-  pin: Maybe<Scalars['Float']>;
-};
-
-/** aggregate variance on columns */
-export type Old_Historical_Data_Variance_Fields = {
-  __typename?: 'old_historical_data_variance_fields';
-  doublevalue: Maybe<Scalars['Float']>;
-  pin: Maybe<Scalars['Float']>;
 };
 
 /** column ordering options */
@@ -3832,10 +3969,18 @@ export type Query_Root = {
   expenses_aggregate: Expenses_Aggregate;
   /** fetch data from the table: "expenses" using primary key columns */
   expenses_by_pk: Maybe<Expenses>;
+  /** fetch data from the table: "gauge_data" */
+  gauge_data: Array<Gauge_Data>;
+  /** fetch aggregated fields from the table: "gauge_data" */
+  gauge_data_aggregate: Gauge_Data_Aggregate;
+  /** fetch data from the table: "gauge_data" using primary key columns */
+  gauge_data_by_pk: Maybe<Gauge_Data>;
   /** fetch data from the table: "historical_data" */
   historical_data: Array<Historical_Data>;
   /** fetch aggregated fields from the table: "historical_data" */
   historical_data_aggregate: Historical_Data_Aggregate;
+  /** fetch data from the table: "historical_data" using primary key columns */
+  historical_data_by_pk: Maybe<Historical_Data>;
   /** fetch data from the table: "labels" */
   labels: Array<Labels>;
   /** fetch aggregated fields from the table: "labels" */
@@ -3854,10 +3999,6 @@ export type Query_Root = {
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk: Maybe<Notifications>;
-  /** fetch data from the table: "old_historical_data" */
-  old_historical_data: Array<Old_Historical_Data>;
-  /** fetch aggregated fields from the table: "old_historical_data" */
-  old_historical_data_aggregate: Old_Historical_Data_Aggregate;
   /** fetch data from the table: "recurring" */
   recurring: Array<Recurring>;
   /** fetch aggregated fields from the table: "recurring" */
@@ -4013,6 +4154,30 @@ export type Query_RootExpenses_By_PkArgs = {
 };
 
 
+export type Query_RootGauge_DataArgs = {
+  distinct_on: InputMaybe<Array<Gauge_Data_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Gauge_Data_Order_By>>;
+  where: InputMaybe<Gauge_Data_Bool_Exp>;
+};
+
+
+export type Query_RootGauge_Data_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Gauge_Data_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Gauge_Data_Order_By>>;
+  where: InputMaybe<Gauge_Data_Bool_Exp>;
+};
+
+
+export type Query_RootGauge_Data_By_PkArgs = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
+};
+
+
 export type Query_RootHistorical_DataArgs = {
   distinct_on: InputMaybe<Array<Historical_Data_Select_Column>>;
   limit: InputMaybe<Scalars['Int']>;
@@ -4028,6 +4193,12 @@ export type Query_RootHistorical_Data_AggregateArgs = {
   offset: InputMaybe<Scalars['Int']>;
   order_by: InputMaybe<Array<Historical_Data_Order_By>>;
   where: InputMaybe<Historical_Data_Bool_Exp>;
+};
+
+
+export type Query_RootHistorical_Data_By_PkArgs = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
 };
 
 
@@ -4097,24 +4268,6 @@ export type Query_RootNotifications_AggregateArgs = {
 
 export type Query_RootNotifications_By_PkArgs = {
   id: Scalars['Int'];
-};
-
-
-export type Query_RootOld_Historical_DataArgs = {
-  distinct_on: InputMaybe<Array<Old_Historical_Data_Select_Column>>;
-  limit: InputMaybe<Scalars['Int']>;
-  offset: InputMaybe<Scalars['Int']>;
-  order_by: InputMaybe<Array<Old_Historical_Data_Order_By>>;
-  where: InputMaybe<Old_Historical_Data_Bool_Exp>;
-};
-
-
-export type Query_RootOld_Historical_Data_AggregateArgs = {
-  distinct_on: InputMaybe<Array<Old_Historical_Data_Select_Column>>;
-  limit: InputMaybe<Scalars['Int']>;
-  offset: InputMaybe<Scalars['Int']>;
-  order_by: InputMaybe<Array<Old_Historical_Data_Order_By>>;
-  where: InputMaybe<Old_Historical_Data_Bool_Exp>;
 };
 
 
@@ -4947,6 +5100,7 @@ export type Recurring_Labels_Updates = {
   _inc?: InputMaybe<Recurring_Labels_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Recurring_Labels_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Recurring_Labels_Bool_Exp;
 };
 
@@ -5413,6 +5567,7 @@ export type Recurring_Updates = {
   _inc?: InputMaybe<Recurring_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Recurring_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Recurring_Bool_Exp;
 };
 
@@ -5728,6 +5883,7 @@ export type Revenues_Updates = {
   _inc?: InputMaybe<Revenues_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Revenues_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Revenues_Bool_Exp;
 };
 
@@ -5982,6 +6138,7 @@ export type Status_Data_Updates = {
   _inc?: InputMaybe<Status_Data_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Status_Data_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Status_Data_Bool_Exp;
 };
 
@@ -6040,10 +6197,20 @@ export type Subscription_Root = {
   expenses_by_pk: Maybe<Expenses>;
   /** fetch data from the table in a streaming manner: "expenses" */
   expenses_stream: Array<Expenses>;
+  /** fetch data from the table: "gauge_data" */
+  gauge_data: Array<Gauge_Data>;
+  /** fetch aggregated fields from the table: "gauge_data" */
+  gauge_data_aggregate: Gauge_Data_Aggregate;
+  /** fetch data from the table: "gauge_data" using primary key columns */
+  gauge_data_by_pk: Maybe<Gauge_Data>;
+  /** fetch data from the table in a streaming manner: "gauge_data" */
+  gauge_data_stream: Array<Gauge_Data>;
   /** fetch data from the table: "historical_data" */
   historical_data: Array<Historical_Data>;
   /** fetch aggregated fields from the table: "historical_data" */
   historical_data_aggregate: Historical_Data_Aggregate;
+  /** fetch data from the table: "historical_data" using primary key columns */
+  historical_data_by_pk: Maybe<Historical_Data>;
   /** fetch data from the table in a streaming manner: "historical_data" */
   historical_data_stream: Array<Historical_Data>;
   /** fetch data from the table: "labels" */
@@ -6070,12 +6237,6 @@ export type Subscription_Root = {
   notifications_by_pk: Maybe<Notifications>;
   /** fetch data from the table in a streaming manner: "notifications" */
   notifications_stream: Array<Notifications>;
-  /** fetch data from the table: "old_historical_data" */
-  old_historical_data: Array<Old_Historical_Data>;
-  /** fetch aggregated fields from the table: "old_historical_data" */
-  old_historical_data_aggregate: Old_Historical_Data_Aggregate;
-  /** fetch data from the table in a streaming manner: "old_historical_data" */
-  old_historical_data_stream: Array<Old_Historical_Data>;
   /** fetch data from the table: "recurring" */
   recurring: Array<Recurring>;
   /** fetch aggregated fields from the table: "recurring" */
@@ -6279,6 +6440,37 @@ export type Subscription_RootExpenses_StreamArgs = {
 };
 
 
+export type Subscription_RootGauge_DataArgs = {
+  distinct_on: InputMaybe<Array<Gauge_Data_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Gauge_Data_Order_By>>;
+  where: InputMaybe<Gauge_Data_Bool_Exp>;
+};
+
+
+export type Subscription_RootGauge_Data_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Gauge_Data_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Gauge_Data_Order_By>>;
+  where: InputMaybe<Gauge_Data_Bool_Exp>;
+};
+
+
+export type Subscription_RootGauge_Data_By_PkArgs = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
+};
+
+
+export type Subscription_RootGauge_Data_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Gauge_Data_Stream_Cursor_Input>>;
+  where: InputMaybe<Gauge_Data_Bool_Exp>;
+};
+
+
 export type Subscription_RootHistorical_DataArgs = {
   distinct_on: InputMaybe<Array<Historical_Data_Select_Column>>;
   limit: InputMaybe<Scalars['Int']>;
@@ -6294,6 +6486,12 @@ export type Subscription_RootHistorical_Data_AggregateArgs = {
   offset: InputMaybe<Scalars['Int']>;
   order_by: InputMaybe<Array<Historical_Data_Order_By>>;
   where: InputMaybe<Historical_Data_Bool_Exp>;
+};
+
+
+export type Subscription_RootHistorical_Data_By_PkArgs = {
+  id: Scalars['uuid'];
+  ts: Scalars['timestamp'];
 };
 
 
@@ -6391,31 +6589,6 @@ export type Subscription_RootNotifications_StreamArgs = {
   batch_size: Scalars['Int'];
   cursor: Array<InputMaybe<Notifications_Stream_Cursor_Input>>;
   where: InputMaybe<Notifications_Bool_Exp>;
-};
-
-
-export type Subscription_RootOld_Historical_DataArgs = {
-  distinct_on: InputMaybe<Array<Old_Historical_Data_Select_Column>>;
-  limit: InputMaybe<Scalars['Int']>;
-  offset: InputMaybe<Scalars['Int']>;
-  order_by: InputMaybe<Array<Old_Historical_Data_Order_By>>;
-  where: InputMaybe<Old_Historical_Data_Bool_Exp>;
-};
-
-
-export type Subscription_RootOld_Historical_Data_AggregateArgs = {
-  distinct_on: InputMaybe<Array<Old_Historical_Data_Select_Column>>;
-  limit: InputMaybe<Scalars['Int']>;
-  offset: InputMaybe<Scalars['Int']>;
-  order_by: InputMaybe<Array<Old_Historical_Data_Order_By>>;
-  where: InputMaybe<Old_Historical_Data_Bool_Exp>;
-};
-
-
-export type Subscription_RootOld_Historical_Data_StreamArgs = {
-  batch_size: Scalars['Int'];
-  cursor: Array<InputMaybe<Old_Historical_Data_Stream_Cursor_Input>>;
-  where: InputMaybe<Old_Historical_Data_Bool_Exp>;
 };
 
 
@@ -7214,6 +7387,7 @@ export type Transaction_Accounts_Updates = {
   _inc?: InputMaybe<Transaction_Accounts_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Transaction_Accounts_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Transaction_Accounts_Bool_Exp;
 };
 
@@ -7502,6 +7676,7 @@ export type Transaction_Attachments_Updates = {
   _inc?: InputMaybe<Transaction_Attachments_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Transaction_Attachments_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Transaction_Attachments_Bool_Exp;
 };
 
@@ -7793,6 +7968,7 @@ export type Transaction_Labels_Updates = {
   _inc?: InputMaybe<Transaction_Labels_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Transaction_Labels_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Transaction_Labels_Bool_Exp;
 };
 
@@ -8482,6 +8658,7 @@ export type Transactions_Updates = {
   _inc?: InputMaybe<Transactions_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Transactions_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Transactions_Bool_Exp;
 };
 
@@ -8706,6 +8883,7 @@ export enum User_Settings_Update_Column {
 export type User_Settings_Updates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<User_Settings_Set_Input>;
+  /** filter the rows which have to be updated */
   where: User_Settings_Bool_Exp;
 };
 
@@ -8889,6 +9067,7 @@ export enum Users_Update_Column {
 export type Users_Updates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Users_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Users_Bool_Exp;
 };
 
@@ -8931,6 +9110,13 @@ export type InsertStatusDataMutationVariables = Exact<{
 
 
 export type InsertStatusDataMutation = { __typename?: 'mutation_root', insert_status_data: { __typename?: 'status_data_mutation_response', affected_rows: number } | null, insert_historical_data: { __typename?: 'historical_data_mutation_response', affected_rows: number } | null };
+
+export type InsertGaugeDataMutationVariables = Exact<{
+  gaugeData: Gauge_Data_Insert_Input;
+}>;
+
+
+export type InsertGaugeDataMutation = { __typename?: 'mutation_root', insert_gauge_data_one: { __typename?: 'gauge_data', id: string } | null };
 
 
 export const GetRecurringItemsDocument = gql`
@@ -8993,6 +9179,13 @@ export const InsertStatusDataDocument = gql`
   }
 }
     `;
+export const InsertGaugeDataDocument = gql`
+    mutation insertGaugeData($gaugeData: gauge_data_insert_input!) {
+  insert_gauge_data_one(object: $gaugeData) {
+    id
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -9012,6 +9205,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     insertStatusData(variables: InsertStatusDataMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<InsertStatusDataMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<InsertStatusDataMutation>(InsertStatusDataDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'insertStatusData', 'mutation');
+    },
+    insertGaugeData(variables: InsertGaugeDataMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<InsertGaugeDataMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertGaugeDataMutation>(InsertGaugeDataDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'insertGaugeData', 'mutation');
     }
   };
 }

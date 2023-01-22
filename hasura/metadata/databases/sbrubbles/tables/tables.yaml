@@ -1,0 +1,3 @@
+- "!include public_gauge_data.yaml"
+- "!include public_historical_data.yaml"
+- "!include public_status_data.yaml"

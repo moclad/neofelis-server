@@ -1,0 +1,3 @@
+table:
+  name: status_data
+  schema: public

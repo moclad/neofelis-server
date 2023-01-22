@@ -4,9 +4,14 @@ import { gql } from 'graphql-request';
 
 import { Injectable } from '@nestjs/common';
 
-import { Historical_Data_Insert_Input, Status_Data_Insert_Input } from '../sdk/sdk';
+import {
+  Gauge_Data_Insert_Input,
+  Historical_Data_Insert_Input,
+  Status_Data_Insert_Input
+} from '../sdk/sdk';
 import { GqlSdk, InjectSdk } from '../sdk/sdk.module';
-import { CreateSensorDto } from './dto/create-sensor.dto';
+import { GaugeDataDto } from './dto/gauge-data.dto';
+import { SensorDataDto } from './dto/sensor-data.dto';
 
 gql`
   mutation insertStatusData(
@@ -24,6 +29,18 @@ gql`
     }
     insert_historical_data(objects: $historyData) {
       affected_rows
+    }
+  }
+`;
+
+gql`
+  mutation insertGaugeData(
+    $gaugeData: gauge_data_insert_input!
+  ) {
+    insert_gauge_data_one(
+      object: $gaugeData
+    ) {
+      id
     }
   }
 `;
@@ -47,7 +64,24 @@ export class SensorsService {
     dayjs.extend(utc);
   }
 
-  public insertSensorData(data: CreateSensorDto) {
+  public insertGaugeData(data: GaugeDataDto) {
+    const gaugeData: Gauge_Data_Insert_Input = {
+      battery: 0,
+      sensor_name: 'rain-sensor',
+      tick: 0.45,
+      ts: dayjs.utc().format(),
+    };
+
+    this.sdk.insertGaugeData({
+      gaugeData,
+    });
+
+
+    return `Gauge data for ${data.sensor} persisted.`;
+  }
+
+
+  public insertSensorData(data: SensorDataDto) {
     const statusData = this.getStatusData(data);
     const historyData: Historical_Data_Insert_Input = {
       sensor_name: data.sensor,
@@ -68,7 +102,7 @@ export class SensorsService {
     return `Sensor data for ${data.sensor} persisted.`;
   }
 
-  private getStatusData(data: CreateSensorDto): Status_Data_Insert_Input[] {
+  private getStatusData(data: SensorDataDto): Status_Data_Insert_Input[] {
     const statusData: Status_Data_Insert_Input[] = [];
 
     const ts = dayjs.utc().format();

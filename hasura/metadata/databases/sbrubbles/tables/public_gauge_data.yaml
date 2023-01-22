@@ -1,0 +1,3 @@
+table:
+  name: gauge_data
+  schema: public
