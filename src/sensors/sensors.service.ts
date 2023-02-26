@@ -69,6 +69,7 @@ export class SensorsService {
       battery: data.battery,
       sensor_name: data.sensor,
       tick: data.tick,
+      amount: data.amount,
       ts: dayjs.utc().format(),
     };
 

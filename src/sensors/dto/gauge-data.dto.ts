@@ -29,7 +29,7 @@ export class GaugeDataDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  public tick: number;
+  public amount: number;
 
   @ApiProperty({
     example: 1,
