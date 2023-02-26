@@ -67,9 +67,8 @@ export class SensorsService {
   }
 
   public insertGaugeData(data: GaugeDataDto) {
-
-    if (dayjs(this.lastGaugeDate).diff(dayjs().toDate(), "day") === 1 && data.amount === 0) {
-      return "";
+    if (dayjs(this.lastGaugeDate).day() === dayjs().day() && data.amount === 0) {
+      return "Data will not be inserted.";
     }
 
     const gaugeData: Gauge_Data_Insert_Input = {
