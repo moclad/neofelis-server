@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { gql } from 'graphql-request';
 
@@ -60,11 +60,18 @@ export class SensorsService {
   private readonly DEW_POINT_SPREAD_PIN = 10;
   private readonly UPDATE_TIME_PIN = 11;
 
+  private lastGaugeDate: Date;
+
   constructor(@InjectSdk() private readonly sdk: GqlSdk) {
     dayjs.extend(utc);
   }
 
   public insertGaugeData(data: GaugeDataDto) {
+
+    if (dayjs(this.lastGaugeDate).diff(dayjs().toDate(), "day") === 1 && data.amount === 0) {
+      return "";
+    }
+
     const gaugeData: Gauge_Data_Insert_Input = {
       battery: data.battery,
       sensor_name: data.sensor,
@@ -73,12 +80,14 @@ export class SensorsService {
       ts: dayjs.utc().format(),
     };
 
-    this.sdk.insertGaugeData({
+    this.lastGaugeDate = dayjs().toDate();;
+
+    const result = await this.sdk.insertGaugeData({
       gaugeData,
     });
 
 
-    return `Gauge data for ${data.sensor} persisted.`;
+    return result.insert_gauge_data_one.id;
   }
 
 
@@ -95,12 +104,12 @@ export class SensorsService {
       zambretti: data.zambretti,
     };
 
-    this.sdk.insertStatusData({
+    const result = await this.sdk.insertStatusData({
       statusData,
       historyData,
     });
 
-    return `Sensor data for ${data.sensor} persisted.`;
+    return `Sensor data for ${data.sensor} persisted (${result.insert_historical_data.affected_rows} data rows inserted).`;
   }
 
   private getStatusData(data: SensorDataDto): Status_Data_Insert_Input[] {
