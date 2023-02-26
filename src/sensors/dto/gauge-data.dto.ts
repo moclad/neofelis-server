@@ -16,17 +16,25 @@ export class GaugeDataDto {
   public time: number;
 
   @ApiProperty({
-    example: 0.45,
-    description: 'Gauge tick, amount representation of each tick movement',
+    example: 1,
+    description: 'Gauge tick',
   })
   @IsNumber()
   @IsNotEmpty()
   public tick: number;
 
   @ApiProperty({
-    example: 2.8,
-    description: 'Battery voltage (V)',
+    example: 0.45,
+    description: 'Amount',
   })
   @IsNumber()
-  public volt: number;
+  @IsNotEmpty()
+  public tick: number;
+
+  @ApiProperty({
+    example: 1,
+    description: 'Battery state (1-OK, 0-LOW)',
+  })
+  @IsNumber()
+  public battery: number;
 }

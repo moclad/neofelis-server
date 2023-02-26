@@ -66,9 +66,9 @@ export class SensorsService {
 
   public insertGaugeData(data: GaugeDataDto) {
     const gaugeData: Gauge_Data_Insert_Input = {
-      battery: 0,
-      sensor_name: 'rain-sensor',
-      tick: 0.45,
+      battery: data.battery,
+      sensor_name: data.sensor,
+      tick: data.tick,
       ts: dayjs.utc().format(),
     };
 
