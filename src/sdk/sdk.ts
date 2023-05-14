@@ -1,6 +1,6 @@
-import { GraphQLClient } from 'graphql-request';
-import * as Dom from 'graphql-request/dist/types.dom';
-import { gql } from 'graphql-request';
+import { gql, GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/src/types.dom';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -85,6 +85,7 @@ export type String_Comparison_Exp = {
 /** columns and relationships of "account_info" */
 export type Account_Info = {
   __typename?: 'account_info';
+  alternate_name: Maybe<Scalars['String']>;
   /** An object relationship */
   asset: Maybe<Assets>;
   created_at: Scalars['timestamptz'];
@@ -261,6 +262,7 @@ export type Account_Info_Bool_Exp = {
   _and?: InputMaybe<Array<Account_Info_Bool_Exp>>;
   _not?: InputMaybe<Account_Info_Bool_Exp>;
   _or?: InputMaybe<Array<Account_Info_Bool_Exp>>;
+  alternate_name?: InputMaybe<String_Comparison_Exp>;
   asset?: InputMaybe<Assets_Bool_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   expense?: InputMaybe<Expenses_Bool_Exp>;
@@ -295,6 +297,7 @@ export type Account_Info_Inc_Input = {
 
 /** input type for inserting data into table "account_info" */
 export type Account_Info_Insert_Input = {
+  alternate_name?: InputMaybe<Scalars['String']>;
   asset?: InputMaybe<Assets_Obj_Rel_Insert_Input>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   expense?: InputMaybe<Expenses_Obj_Rel_Insert_Input>;
@@ -314,6 +317,7 @@ export type Account_Info_Insert_Input = {
 /** aggregate max on columns */
 export type Account_Info_Max_Fields = {
   __typename?: 'account_info_max_fields';
+  alternate_name: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
@@ -324,6 +328,7 @@ export type Account_Info_Max_Fields = {
 /** aggregate min on columns */
 export type Account_Info_Min_Fields = {
   __typename?: 'account_info_min_fields';
+  alternate_name: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
@@ -356,6 +361,7 @@ export type Account_Info_On_Conflict = {
 
 /** Ordering options when selecting data from "account_info". */
 export type Account_Info_Order_By = {
+  alternate_name?: InputMaybe<Order_By>;
   asset?: InputMaybe<Assets_Order_By>;
   created_at?: InputMaybe<Order_By>;
   expense?: InputMaybe<Expenses_Order_By>;
@@ -380,6 +386,8 @@ export type Account_Info_Pk_Columns_Input = {
 /** select columns of table "account_info" */
 export enum Account_Info_Select_Column {
   /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
@@ -393,6 +401,7 @@ export enum Account_Info_Select_Column {
 
 /** input type for updating data in table "account_info" */
 export type Account_Info_Set_Input = {
+  alternate_name?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -428,6 +437,7 @@ export type Account_Info_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Account_Info_Stream_Cursor_Value_Input = {
+  alternate_name?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -443,6 +453,8 @@ export type Account_Info_Sum_Fields = {
 
 /** update columns of table "account_info" */
 export enum Account_Info_Update_Column {
+  /** column name */
+  AlternateName = 'alternate_name',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -489,13 +501,41 @@ export type Assets = {
   account_info: Account_Info;
   account_no: Maybe<Scalars['String']>;
   active: Scalars['Boolean'];
+  alternate_name: Maybe<Scalars['String']>;
   balance: Maybe<Scalars['float8']>;
   balance_date: Maybe<Scalars['date']>;
+  /** An object relationship */
+  category: Maybe<Categories>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Scalars['timestamptz'];
   default: Scalars['Boolean'];
   id: Scalars['bigint'];
   name: Scalars['String'];
+  /** An array relationship */
+  transactions_imports: Array<Transactions_Import>;
+  /** An aggregate relationship */
+  transactions_imports_aggregate: Transactions_Import_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "assets" */
+export type AssetsTransactions_ImportsArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Import_Order_By>>;
+  where: InputMaybe<Transactions_Import_Bool_Exp>;
+};
+
+
+/** columns and relationships of "assets" */
+export type AssetsTransactions_Imports_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Import_Order_By>>;
+  where: InputMaybe<Transactions_Import_Bool_Exp>;
 };
 
 /** aggregated selection of "assets" */
@@ -503,6 +543,107 @@ export type Assets_Aggregate = {
   __typename?: 'assets_aggregate';
   aggregate: Maybe<Assets_Aggregate_Fields>;
   nodes: Array<Assets>;
+};
+
+export type Assets_Aggregate_Bool_Exp = {
+  avg?: InputMaybe<Assets_Aggregate_Bool_Exp_Avg>;
+  bool_and?: InputMaybe<Assets_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Assets_Aggregate_Bool_Exp_Bool_Or>;
+  corr?: InputMaybe<Assets_Aggregate_Bool_Exp_Corr>;
+  count?: InputMaybe<Assets_Aggregate_Bool_Exp_Count>;
+  covar_samp?: InputMaybe<Assets_Aggregate_Bool_Exp_Covar_Samp>;
+  max?: InputMaybe<Assets_Aggregate_Bool_Exp_Max>;
+  min?: InputMaybe<Assets_Aggregate_Bool_Exp_Min>;
+  stddev_samp?: InputMaybe<Assets_Aggregate_Bool_Exp_Stddev_Samp>;
+  sum?: InputMaybe<Assets_Aggregate_Bool_Exp_Sum>;
+  var_samp?: InputMaybe<Assets_Aggregate_Bool_Exp_Var_Samp>;
+};
+
+export type Assets_Aggregate_Bool_Exp_Avg = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Avg_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Corr = {
+  arguments: Assets_Aggregate_Bool_Exp_Corr_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Corr_Arguments = {
+  X: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+  Y: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Corr_Arguments_Columns;
+};
+
+export type Assets_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Assets_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Covar_Samp = {
+  arguments: Assets_Aggregate_Bool_Exp_Covar_Samp_Arguments;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Covar_Samp_Arguments = {
+  X: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+  Y: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns;
+};
+
+export type Assets_Aggregate_Bool_Exp_Max = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Max_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Min = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Min_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Stddev_Samp = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Sum = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Sum_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
+};
+
+export type Assets_Aggregate_Bool_Exp_Var_Samp = {
+  arguments: Assets_Select_Column_Assets_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Assets_Bool_Exp>;
+  predicate: Float8_Comparison_Exp;
 };
 
 /** aggregate fields of "assets" */
@@ -528,11 +669,41 @@ export type Assets_Aggregate_FieldsCountArgs = {
   distinct: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "assets" */
+export type Assets_Aggregate_Order_By = {
+  avg?: InputMaybe<Assets_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Assets_Max_Order_By>;
+  min?: InputMaybe<Assets_Min_Order_By>;
+  stddev?: InputMaybe<Assets_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Assets_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Assets_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Assets_Sum_Order_By>;
+  var_pop?: InputMaybe<Assets_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Assets_Var_Samp_Order_By>;
+  variance?: InputMaybe<Assets_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "assets" */
+export type Assets_Arr_Rel_Insert_Input = {
+  data: Array<Assets_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Assets_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Assets_Avg_Fields = {
   __typename?: 'assets_avg_fields';
   balance: Maybe<Scalars['Float']>;
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "assets" */
+export type Assets_Avg_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "assets". All fields are combined with a logical 'AND'. */
@@ -543,12 +714,17 @@ export type Assets_Bool_Exp = {
   account_info?: InputMaybe<Account_Info_Bool_Exp>;
   account_no?: InputMaybe<String_Comparison_Exp>;
   active?: InputMaybe<Boolean_Comparison_Exp>;
+  alternate_name?: InputMaybe<String_Comparison_Exp>;
   balance?: InputMaybe<Float8_Comparison_Exp>;
   balance_date?: InputMaybe<Date_Comparison_Exp>;
+  category?: InputMaybe<Categories_Bool_Exp>;
+  category_id?: InputMaybe<Bigint_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   default?: InputMaybe<Boolean_Comparison_Exp>;
   id?: InputMaybe<Bigint_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  transactions_imports?: InputMaybe<Transactions_Import_Bool_Exp>;
+  transactions_imports_aggregate?: InputMaybe<Transactions_Import_Aggregate_Bool_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -561,6 +737,7 @@ export enum Assets_Constraint {
 /** input type for incrementing numeric columns in table "assets" */
 export type Assets_Inc_Input = {
   balance?: InputMaybe<Scalars['float8']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   id?: InputMaybe<Scalars['bigint']>;
 };
 
@@ -569,12 +746,16 @@ export type Assets_Insert_Input = {
   account_info?: InputMaybe<Account_Info_Obj_Rel_Insert_Input>;
   account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
   balance?: InputMaybe<Scalars['float8']>;
   balance_date?: InputMaybe<Scalars['date']>;
+  category?: InputMaybe<Categories_Obj_Rel_Insert_Input>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
+  transactions_imports?: InputMaybe<Transactions_Import_Arr_Rel_Insert_Input>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
 };
 
@@ -582,24 +763,54 @@ export type Assets_Insert_Input = {
 export type Assets_Max_Fields = {
   __typename?: 'assets_max_fields';
   account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
   balance: Maybe<Scalars['float8']>;
   balance_date: Maybe<Scalars['date']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
 };
 
+/** order by max() on columns of table "assets" */
+export type Assets_Max_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  balance?: InputMaybe<Order_By>;
+  balance_date?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Assets_Min_Fields = {
   __typename?: 'assets_min_fields';
   account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
   balance: Maybe<Scalars['float8']>;
   balance_date: Maybe<Scalars['date']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "assets" */
+export type Assets_Min_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  balance?: InputMaybe<Order_By>;
+  balance_date?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "assets" */
@@ -630,12 +841,16 @@ export type Assets_Order_By = {
   account_info?: InputMaybe<Account_Info_Order_By>;
   account_no?: InputMaybe<Order_By>;
   active?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
   balance?: InputMaybe<Order_By>;
   balance_date?: InputMaybe<Order_By>;
+  category?: InputMaybe<Categories_Order_By>;
+  category_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   default?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  transactions_imports_aggregate?: InputMaybe<Transactions_Import_Aggregate_Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
@@ -651,9 +866,13 @@ export enum Assets_Select_Column {
   /** column name */
   Active = 'active',
   /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
   Balance = 'balance',
   /** column name */
   BalanceDate = 'balance_date',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -666,12 +885,78 @@ export enum Assets_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** select "assets_aggregate_bool_exp_avg_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Avg_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
+/** select "assets_aggregate_bool_exp_bool_and_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  Default = 'default'
+}
+
+/** select "assets_aggregate_bool_exp_bool_or_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  Default = 'default'
+}
+
+/** select "assets_aggregate_bool_exp_corr_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Corr_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
+/** select "assets_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Covar_Samp_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
+/** select "assets_aggregate_bool_exp_max_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Max_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
+/** select "assets_aggregate_bool_exp_min_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Min_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
+/** select "assets_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Stddev_Samp_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
+/** select "assets_aggregate_bool_exp_sum_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Sum_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
+/** select "assets_aggregate_bool_exp_var_samp_arguments_columns" columns of table "assets" */
+export enum Assets_Select_Column_Assets_Aggregate_Bool_Exp_Var_Samp_Arguments_Columns {
+  /** column name */
+  Balance = 'balance'
+}
+
 /** input type for updating data in table "assets" */
 export type Assets_Set_Input = {
   account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
   balance?: InputMaybe<Scalars['float8']>;
   balance_date?: InputMaybe<Scalars['date']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['bigint']>;
@@ -683,21 +968,45 @@ export type Assets_Set_Input = {
 export type Assets_Stddev_Fields = {
   __typename?: 'assets_stddev_fields';
   balance: Maybe<Scalars['Float']>;
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "assets" */
+export type Assets_Stddev_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Assets_Stddev_Pop_Fields = {
   __typename?: 'assets_stddev_pop_fields';
   balance: Maybe<Scalars['Float']>;
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "assets" */
+export type Assets_Stddev_Pop_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Assets_Stddev_Samp_Fields = {
   __typename?: 'assets_stddev_samp_fields';
   balance: Maybe<Scalars['Float']>;
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "assets" */
+export type Assets_Stddev_Samp_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "assets" */
@@ -712,8 +1021,10 @@ export type Assets_Stream_Cursor_Input = {
 export type Assets_Stream_Cursor_Value_Input = {
   account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
   balance?: InputMaybe<Scalars['float8']>;
   balance_date?: InputMaybe<Scalars['date']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['bigint']>;
@@ -725,7 +1036,15 @@ export type Assets_Stream_Cursor_Value_Input = {
 export type Assets_Sum_Fields = {
   __typename?: 'assets_sum_fields';
   balance: Maybe<Scalars['float8']>;
+  category_id: Maybe<Scalars['bigint']>;
   id: Maybe<Scalars['bigint']>;
+};
+
+/** order by sum() on columns of table "assets" */
+export type Assets_Sum_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "assets" */
@@ -735,9 +1054,13 @@ export enum Assets_Update_Column {
   /** column name */
   Active = 'active',
   /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
   Balance = 'balance',
   /** column name */
   BalanceDate = 'balance_date',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -763,21 +1086,45 @@ export type Assets_Updates = {
 export type Assets_Var_Pop_Fields = {
   __typename?: 'assets_var_pop_fields';
   balance: Maybe<Scalars['Float']>;
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "assets" */
+export type Assets_Var_Pop_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Assets_Var_Samp_Fields = {
   __typename?: 'assets_var_samp_fields';
   balance: Maybe<Scalars['Float']>;
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "assets" */
+export type Assets_Var_Samp_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Assets_Variance_Fields = {
   __typename?: 'assets_variance_fields';
   balance: Maybe<Scalars['Float']>;
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "assets" */
+export type Assets_Variance_Order_By = {
+  balance?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
@@ -830,18 +1177,94 @@ export type Bpchar_Comparison_Exp = {
 export type Categories = {
   __typename?: 'categories';
   active: Scalars['Boolean'];
+  /** An array relationship */
+  assets: Array<Assets>;
+  /** An aggregate relationship */
+  assets_aggregate: Assets_Aggregate;
   created_at: Scalars['timestamptz'];
+  /** An array relationship */
+  expenses: Array<Expenses>;
+  /** An aggregate relationship */
+  expenses_aggregate: Expenses_Aggregate;
   id: Scalars['bigint'];
+  /** An array relationship */
+  liabilities: Array<Liabilities>;
+  /** An aggregate relationship */
+  liabilities_aggregate: Liabilities_Aggregate;
   name: Scalars['String'];
   /** An array relationship */
   recurrings: Array<Recurring>;
   /** An aggregate relationship */
   recurrings_aggregate: Recurring_Aggregate;
   /** An array relationship */
+  revenues: Array<Revenues>;
+  /** An aggregate relationship */
+  revenues_aggregate: Revenues_Aggregate;
+  /** An array relationship */
   transactions: Array<Transactions>;
   /** An aggregate relationship */
   transactions_aggregate: Transactions_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesAssetsArgs = {
+  distinct_on: InputMaybe<Array<Assets_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Assets_Order_By>>;
+  where: InputMaybe<Assets_Bool_Exp>;
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesAssets_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Assets_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Assets_Order_By>>;
+  where: InputMaybe<Assets_Bool_Exp>;
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesExpensesArgs = {
+  distinct_on: InputMaybe<Array<Expenses_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Expenses_Order_By>>;
+  where: InputMaybe<Expenses_Bool_Exp>;
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesExpenses_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Expenses_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Expenses_Order_By>>;
+  where: InputMaybe<Expenses_Bool_Exp>;
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesLiabilitiesArgs = {
+  distinct_on: InputMaybe<Array<Liabilities_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Liabilities_Order_By>>;
+  where: InputMaybe<Liabilities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesLiabilities_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Liabilities_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Liabilities_Order_By>>;
+  where: InputMaybe<Liabilities_Bool_Exp>;
 };
 
 
@@ -862,6 +1285,26 @@ export type CategoriesRecurrings_AggregateArgs = {
   offset: InputMaybe<Scalars['Int']>;
   order_by: InputMaybe<Array<Recurring_Order_By>>;
   where: InputMaybe<Recurring_Bool_Exp>;
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesRevenuesArgs = {
+  distinct_on: InputMaybe<Array<Revenues_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Revenues_Order_By>>;
+  where: InputMaybe<Revenues_Bool_Exp>;
+};
+
+
+/** columns and relationships of "categories" */
+export type CategoriesRevenues_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Revenues_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Revenues_Order_By>>;
+  where: InputMaybe<Revenues_Bool_Exp>;
 };
 
 
@@ -926,11 +1369,19 @@ export type Categories_Bool_Exp = {
   _not?: InputMaybe<Categories_Bool_Exp>;
   _or?: InputMaybe<Array<Categories_Bool_Exp>>;
   active?: InputMaybe<Boolean_Comparison_Exp>;
+  assets?: InputMaybe<Assets_Bool_Exp>;
+  assets_aggregate?: InputMaybe<Assets_Aggregate_Bool_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  expenses?: InputMaybe<Expenses_Bool_Exp>;
+  expenses_aggregate?: InputMaybe<Expenses_Aggregate_Bool_Exp>;
   id?: InputMaybe<Bigint_Comparison_Exp>;
+  liabilities?: InputMaybe<Liabilities_Bool_Exp>;
+  liabilities_aggregate?: InputMaybe<Liabilities_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   recurrings?: InputMaybe<Recurring_Bool_Exp>;
   recurrings_aggregate?: InputMaybe<Recurring_Aggregate_Bool_Exp>;
+  revenues?: InputMaybe<Revenues_Bool_Exp>;
+  revenues_aggregate?: InputMaybe<Revenues_Aggregate_Bool_Exp>;
   transactions?: InputMaybe<Transactions_Bool_Exp>;
   transactions_aggregate?: InputMaybe<Transactions_Aggregate_Bool_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -950,10 +1401,14 @@ export type Categories_Inc_Input = {
 /** input type for inserting data into table "categories" */
 export type Categories_Insert_Input = {
   active?: InputMaybe<Scalars['Boolean']>;
+  assets?: InputMaybe<Assets_Arr_Rel_Insert_Input>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  expenses?: InputMaybe<Expenses_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['bigint']>;
+  liabilities?: InputMaybe<Liabilities_Arr_Rel_Insert_Input>;
   name?: InputMaybe<Scalars['String']>;
   recurrings?: InputMaybe<Recurring_Arr_Rel_Insert_Input>;
+  revenues?: InputMaybe<Revenues_Arr_Rel_Insert_Input>;
   transactions?: InputMaybe<Transactions_Arr_Rel_Insert_Input>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
 };
@@ -1002,10 +1457,14 @@ export type Categories_On_Conflict = {
 /** Ordering options when selecting data from "categories". */
 export type Categories_Order_By = {
   active?: InputMaybe<Order_By>;
+  assets_aggregate?: InputMaybe<Assets_Aggregate_Order_By>;
   created_at?: InputMaybe<Order_By>;
+  expenses_aggregate?: InputMaybe<Expenses_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
+  liabilities_aggregate?: InputMaybe<Liabilities_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   recurrings_aggregate?: InputMaybe<Recurring_Aggregate_Order_By>;
+  revenues_aggregate?: InputMaybe<Revenues_Aggregate_Order_By>;
   transactions_aggregate?: InputMaybe<Transactions_Aggregate_Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -1146,7 +1605,12 @@ export type Expenses = {
   __typename?: 'expenses';
   /** An object relationship */
   account_info: Account_Info;
+  account_no: Maybe<Scalars['String']>;
   active: Scalars['Boolean'];
+  alternate_name: Maybe<Scalars['String']>;
+  /** An object relationship */
+  category: Maybe<Categories>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Scalars['timestamptz'];
   id: Scalars['bigint'];
   name: Scalars['String'];
@@ -1158,6 +1622,33 @@ export type Expenses_Aggregate = {
   __typename?: 'expenses_aggregate';
   aggregate: Maybe<Expenses_Aggregate_Fields>;
   nodes: Array<Expenses>;
+};
+
+export type Expenses_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Expenses_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Expenses_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Expenses_Aggregate_Bool_Exp_Count>;
+};
+
+export type Expenses_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Expenses_Select_Column_Expenses_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Expenses_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Expenses_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Expenses_Select_Column_Expenses_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Expenses_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Expenses_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Expenses_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Expenses_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "expenses" */
@@ -1183,10 +1674,39 @@ export type Expenses_Aggregate_FieldsCountArgs = {
   distinct: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "expenses" */
+export type Expenses_Aggregate_Order_By = {
+  avg?: InputMaybe<Expenses_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Expenses_Max_Order_By>;
+  min?: InputMaybe<Expenses_Min_Order_By>;
+  stddev?: InputMaybe<Expenses_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Expenses_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Expenses_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Expenses_Sum_Order_By>;
+  var_pop?: InputMaybe<Expenses_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Expenses_Var_Samp_Order_By>;
+  variance?: InputMaybe<Expenses_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "expenses" */
+export type Expenses_Arr_Rel_Insert_Input = {
+  data: Array<Expenses_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Expenses_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Expenses_Avg_Fields = {
   __typename?: 'expenses_avg_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "expenses" */
+export type Expenses_Avg_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "expenses". All fields are combined with a logical 'AND'. */
@@ -1195,7 +1715,11 @@ export type Expenses_Bool_Exp = {
   _not?: InputMaybe<Expenses_Bool_Exp>;
   _or?: InputMaybe<Array<Expenses_Bool_Exp>>;
   account_info?: InputMaybe<Account_Info_Bool_Exp>;
+  account_no?: InputMaybe<String_Comparison_Exp>;
   active?: InputMaybe<Boolean_Comparison_Exp>;
+  alternate_name?: InputMaybe<String_Comparison_Exp>;
+  category?: InputMaybe<Categories_Bool_Exp>;
+  category_id?: InputMaybe<Bigint_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Bigint_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
@@ -1210,13 +1734,18 @@ export enum Expenses_Constraint {
 
 /** input type for incrementing numeric columns in table "expenses" */
 export type Expenses_Inc_Input = {
+  category_id?: InputMaybe<Scalars['bigint']>;
   id?: InputMaybe<Scalars['bigint']>;
 };
 
 /** input type for inserting data into table "expenses" */
 export type Expenses_Insert_Input = {
   account_info?: InputMaybe<Account_Info_Obj_Rel_Insert_Input>;
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Categories_Obj_Rel_Insert_Input>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -1226,19 +1755,47 @@ export type Expenses_Insert_Input = {
 /** aggregate max on columns */
 export type Expenses_Max_Fields = {
   __typename?: 'expenses_max_fields';
+  account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
 };
 
+/** order by max() on columns of table "expenses" */
+export type Expenses_Max_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Expenses_Min_Fields = {
   __typename?: 'expenses_min_fields';
+  account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "expenses" */
+export type Expenses_Min_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "expenses" */
@@ -1267,7 +1824,11 @@ export type Expenses_On_Conflict = {
 /** Ordering options when selecting data from "expenses". */
 export type Expenses_Order_By = {
   account_info?: InputMaybe<Account_Info_Order_By>;
+  account_no?: InputMaybe<Order_By>;
   active?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category?: InputMaybe<Categories_Order_By>;
+  category_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
@@ -1282,7 +1843,13 @@ export type Expenses_Pk_Columns_Input = {
 /** select columns of table "expenses" */
 export enum Expenses_Select_Column {
   /** column name */
+  AccountNo = 'account_no',
+  /** column name */
   Active = 'active',
+  /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -1293,9 +1860,24 @@ export enum Expenses_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** select "expenses_aggregate_bool_exp_bool_and_arguments_columns" columns of table "expenses" */
+export enum Expenses_Select_Column_Expenses_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Active = 'active'
+}
+
+/** select "expenses_aggregate_bool_exp_bool_or_arguments_columns" columns of table "expenses" */
+export enum Expenses_Select_Column_Expenses_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Active = 'active'
+}
+
 /** input type for updating data in table "expenses" */
 export type Expenses_Set_Input = {
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -1305,19 +1887,40 @@ export type Expenses_Set_Input = {
 /** aggregate stddev on columns */
 export type Expenses_Stddev_Fields = {
   __typename?: 'expenses_stddev_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "expenses" */
+export type Expenses_Stddev_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Expenses_Stddev_Pop_Fields = {
   __typename?: 'expenses_stddev_pop_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "expenses" */
+export type Expenses_Stddev_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Expenses_Stddev_Samp_Fields = {
   __typename?: 'expenses_stddev_samp_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "expenses" */
+export type Expenses_Stddev_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "expenses" */
@@ -1330,7 +1933,10 @@ export type Expenses_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Expenses_Stream_Cursor_Value_Input = {
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -1340,13 +1946,26 @@ export type Expenses_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type Expenses_Sum_Fields = {
   __typename?: 'expenses_sum_fields';
+  category_id: Maybe<Scalars['bigint']>;
   id: Maybe<Scalars['bigint']>;
+};
+
+/** order by sum() on columns of table "expenses" */
+export type Expenses_Sum_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "expenses" */
 export enum Expenses_Update_Column {
   /** column name */
+  AccountNo = 'account_no',
+  /** column name */
   Active = 'active',
+  /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -1369,19 +1988,40 @@ export type Expenses_Updates = {
 /** aggregate var_pop on columns */
 export type Expenses_Var_Pop_Fields = {
   __typename?: 'expenses_var_pop_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "expenses" */
+export type Expenses_Var_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Expenses_Var_Samp_Fields = {
   __typename?: 'expenses_var_samp_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "expenses" */
+export type Expenses_Var_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Expenses_Variance_Fields = {
   __typename?: 'expenses_variance_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "expenses" */
+export type Expenses_Variance_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
@@ -1404,7 +2044,7 @@ export type Gauge_Data = {
   battery: Maybe<Scalars['float8']>;
   id: Scalars['uuid'];
   sensor_name: Scalars['String'];
-  tick: Scalars['smallint'];
+  tick: Maybe<Scalars['smallint']>;
   ts: Scalars['timestamp'];
 };
 
@@ -2272,7 +2912,12 @@ export type Liabilities = {
   __typename?: 'liabilities';
   /** An object relationship */
   account_info: Account_Info;
+  account_no: Maybe<Scalars['String']>;
   active: Scalars['Boolean'];
+  alternate_name: Maybe<Scalars['String']>;
+  /** An object relationship */
+  category: Maybe<Categories>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Scalars['timestamptz'];
   id: Scalars['bigint'];
   name: Scalars['String'];
@@ -2284,6 +2929,33 @@ export type Liabilities_Aggregate = {
   __typename?: 'liabilities_aggregate';
   aggregate: Maybe<Liabilities_Aggregate_Fields>;
   nodes: Array<Liabilities>;
+};
+
+export type Liabilities_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Liabilities_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Liabilities_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Liabilities_Aggregate_Bool_Exp_Count>;
+};
+
+export type Liabilities_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Liabilities_Select_Column_Liabilities_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Liabilities_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Liabilities_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Liabilities_Select_Column_Liabilities_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Liabilities_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Liabilities_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Liabilities_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Liabilities_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "liabilities" */
@@ -2309,10 +2981,39 @@ export type Liabilities_Aggregate_FieldsCountArgs = {
   distinct: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "liabilities" */
+export type Liabilities_Aggregate_Order_By = {
+  avg?: InputMaybe<Liabilities_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Liabilities_Max_Order_By>;
+  min?: InputMaybe<Liabilities_Min_Order_By>;
+  stddev?: InputMaybe<Liabilities_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Liabilities_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Liabilities_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Liabilities_Sum_Order_By>;
+  var_pop?: InputMaybe<Liabilities_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Liabilities_Var_Samp_Order_By>;
+  variance?: InputMaybe<Liabilities_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "liabilities" */
+export type Liabilities_Arr_Rel_Insert_Input = {
+  data: Array<Liabilities_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Liabilities_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Liabilities_Avg_Fields = {
   __typename?: 'liabilities_avg_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "liabilities" */
+export type Liabilities_Avg_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "liabilities". All fields are combined with a logical 'AND'. */
@@ -2321,7 +3022,11 @@ export type Liabilities_Bool_Exp = {
   _not?: InputMaybe<Liabilities_Bool_Exp>;
   _or?: InputMaybe<Array<Liabilities_Bool_Exp>>;
   account_info?: InputMaybe<Account_Info_Bool_Exp>;
+  account_no?: InputMaybe<String_Comparison_Exp>;
   active?: InputMaybe<Boolean_Comparison_Exp>;
+  alternate_name?: InputMaybe<String_Comparison_Exp>;
+  category?: InputMaybe<Categories_Bool_Exp>;
+  category_id?: InputMaybe<Bigint_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Bigint_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
@@ -2336,13 +3041,18 @@ export enum Liabilities_Constraint {
 
 /** input type for incrementing numeric columns in table "liabilities" */
 export type Liabilities_Inc_Input = {
+  category_id?: InputMaybe<Scalars['bigint']>;
   id?: InputMaybe<Scalars['bigint']>;
 };
 
 /** input type for inserting data into table "liabilities" */
 export type Liabilities_Insert_Input = {
   account_info?: InputMaybe<Account_Info_Obj_Rel_Insert_Input>;
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Categories_Obj_Rel_Insert_Input>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2352,19 +3062,47 @@ export type Liabilities_Insert_Input = {
 /** aggregate max on columns */
 export type Liabilities_Max_Fields = {
   __typename?: 'liabilities_max_fields';
+  account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
 };
 
+/** order by max() on columns of table "liabilities" */
+export type Liabilities_Max_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Liabilities_Min_Fields = {
   __typename?: 'liabilities_min_fields';
+  account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "liabilities" */
+export type Liabilities_Min_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "liabilities" */
@@ -2393,7 +3131,11 @@ export type Liabilities_On_Conflict = {
 /** Ordering options when selecting data from "liabilities". */
 export type Liabilities_Order_By = {
   account_info?: InputMaybe<Account_Info_Order_By>;
+  account_no?: InputMaybe<Order_By>;
   active?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category?: InputMaybe<Categories_Order_By>;
+  category_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
@@ -2408,7 +3150,13 @@ export type Liabilities_Pk_Columns_Input = {
 /** select columns of table "liabilities" */
 export enum Liabilities_Select_Column {
   /** column name */
+  AccountNo = 'account_no',
+  /** column name */
   Active = 'active',
+  /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -2419,9 +3167,24 @@ export enum Liabilities_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** select "liabilities_aggregate_bool_exp_bool_and_arguments_columns" columns of table "liabilities" */
+export enum Liabilities_Select_Column_Liabilities_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Active = 'active'
+}
+
+/** select "liabilities_aggregate_bool_exp_bool_or_arguments_columns" columns of table "liabilities" */
+export enum Liabilities_Select_Column_Liabilities_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Active = 'active'
+}
+
 /** input type for updating data in table "liabilities" */
 export type Liabilities_Set_Input = {
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2431,19 +3194,40 @@ export type Liabilities_Set_Input = {
 /** aggregate stddev on columns */
 export type Liabilities_Stddev_Fields = {
   __typename?: 'liabilities_stddev_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "liabilities" */
+export type Liabilities_Stddev_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Liabilities_Stddev_Pop_Fields = {
   __typename?: 'liabilities_stddev_pop_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "liabilities" */
+export type Liabilities_Stddev_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Liabilities_Stddev_Samp_Fields = {
   __typename?: 'liabilities_stddev_samp_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "liabilities" */
+export type Liabilities_Stddev_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "liabilities" */
@@ -2456,7 +3240,10 @@ export type Liabilities_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Liabilities_Stream_Cursor_Value_Input = {
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['bigint']>;
   name?: InputMaybe<Scalars['String']>;
@@ -2466,13 +3253,26 @@ export type Liabilities_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type Liabilities_Sum_Fields = {
   __typename?: 'liabilities_sum_fields';
+  category_id: Maybe<Scalars['bigint']>;
   id: Maybe<Scalars['bigint']>;
+};
+
+/** order by sum() on columns of table "liabilities" */
+export type Liabilities_Sum_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "liabilities" */
 export enum Liabilities_Update_Column {
   /** column name */
+  AccountNo = 'account_no',
+  /** column name */
   Active = 'active',
+  /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -2495,19 +3295,40 @@ export type Liabilities_Updates = {
 /** aggregate var_pop on columns */
 export type Liabilities_Var_Pop_Fields = {
   __typename?: 'liabilities_var_pop_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "liabilities" */
+export type Liabilities_Var_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Liabilities_Var_Samp_Fields = {
   __typename?: 'liabilities_var_samp_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "liabilities" */
+export type Liabilities_Var_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Liabilities_Variance_Fields = {
   __typename?: 'liabilities_variance_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "liabilities" */
+export type Liabilities_Variance_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** mutation root */
@@ -2581,6 +3402,10 @@ export type Mutation_Root = {
   delete_transactions: Maybe<Transactions_Mutation_Response>;
   /** delete single row from the table: "transactions" */
   delete_transactions_by_pk: Maybe<Transactions>;
+  /** delete data from the table: "transactions_import" */
+  delete_transactions_import: Maybe<Transactions_Import_Mutation_Response>;
+  /** delete single row from the table: "transactions_import" */
+  delete_transactions_import_by_pk: Maybe<Transactions_Import>;
   /** delete data from the table: "user_settings" */
   delete_user_settings: Maybe<User_Settings_Mutation_Response>;
   /** delete single row from the table: "user_settings" */
@@ -2655,6 +3480,10 @@ export type Mutation_Root = {
   insert_transaction_labels_one: Maybe<Transaction_Labels>;
   /** insert data into the table: "transactions" */
   insert_transactions: Maybe<Transactions_Mutation_Response>;
+  /** insert data into the table: "transactions_import" */
+  insert_transactions_import: Maybe<Transactions_Import_Mutation_Response>;
+  /** insert a single row into the table: "transactions_import" */
+  insert_transactions_import_one: Maybe<Transactions_Import>;
   /** insert a single row into the table: "transactions" */
   insert_transactions_one: Maybe<Transactions>;
   /** insert data into the table: "user_settings" */
@@ -2765,6 +3594,12 @@ export type Mutation_Root = {
   update_transactions: Maybe<Transactions_Mutation_Response>;
   /** update single row of the table: "transactions" */
   update_transactions_by_pk: Maybe<Transactions>;
+  /** update data of the table: "transactions_import" */
+  update_transactions_import: Maybe<Transactions_Import_Mutation_Response>;
+  /** update single row of the table: "transactions_import" */
+  update_transactions_import_by_pk: Maybe<Transactions_Import>;
+  /** update multiples rows of table: "transactions_import" */
+  update_transactions_import_many: Maybe<Array<Maybe<Transactions_Import_Mutation_Response>>>;
   /** update multiples rows of table: "transactions" */
   update_transactions_many: Maybe<Array<Maybe<Transactions_Mutation_Response>>>;
   /** update data of the table: "user_settings" */
@@ -2989,6 +3824,18 @@ export type Mutation_RootDelete_TransactionsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Transactions_By_PkArgs = {
   id: Scalars['bigint'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Transactions_ImportArgs = {
+  where: Transactions_Import_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Transactions_Import_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -3244,6 +4091,20 @@ export type Mutation_RootInsert_Transaction_Labels_OneArgs = {
 export type Mutation_RootInsert_TransactionsArgs = {
   objects: Array<Transactions_Insert_Input>;
   on_conflict: InputMaybe<Transactions_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Transactions_ImportArgs = {
+  objects: Array<Transactions_Import_Insert_Input>;
+  on_conflict: InputMaybe<Transactions_Import_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Transactions_Import_OneArgs = {
+  object: Transactions_Import_Insert_Input;
+  on_conflict: InputMaybe<Transactions_Import_On_Conflict>;
 };
 
 
@@ -3651,6 +4512,28 @@ export type Mutation_RootUpdate_Transactions_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Transactions_ImportArgs = {
+  _inc: InputMaybe<Transactions_Import_Inc_Input>;
+  _set: InputMaybe<Transactions_Import_Set_Input>;
+  where: Transactions_Import_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Transactions_Import_By_PkArgs = {
+  _inc: InputMaybe<Transactions_Import_Inc_Input>;
+  _set: InputMaybe<Transactions_Import_Set_Input>;
+  pk_columns: Transactions_Import_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Transactions_Import_ManyArgs = {
+  updates: Array<Transactions_Import_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Transactions_ManyArgs = {
   updates: Array<Transactions_Updates>;
 };
@@ -3974,9 +4857,9 @@ export type Query_Root = {
   account_info_aggregate: Account_Info_Aggregate;
   /** fetch data from the table: "account_info" using primary key columns */
   account_info_by_pk: Maybe<Account_Info>;
-  /** fetch data from the table: "assets" */
+  /** An array relationship */
   assets: Array<Assets>;
-  /** fetch aggregated fields from the table: "assets" */
+  /** An aggregate relationship */
   assets_aggregate: Assets_Aggregate;
   /** fetch data from the table: "assets" using primary key columns */
   assets_by_pk: Maybe<Assets>;
@@ -3986,9 +4869,9 @@ export type Query_Root = {
   categories_aggregate: Categories_Aggregate;
   /** fetch data from the table: "categories" using primary key columns */
   categories_by_pk: Maybe<Categories>;
-  /** fetch data from the table: "expenses" */
+  /** An array relationship */
   expenses: Array<Expenses>;
-  /** fetch aggregated fields from the table: "expenses" */
+  /** An aggregate relationship */
   expenses_aggregate: Expenses_Aggregate;
   /** fetch data from the table: "expenses" using primary key columns */
   expenses_by_pk: Maybe<Expenses>;
@@ -4010,9 +4893,9 @@ export type Query_Root = {
   labels_aggregate: Labels_Aggregate;
   /** fetch data from the table: "labels" using primary key columns */
   labels_by_pk: Maybe<Labels>;
-  /** fetch data from the table: "liabilities" */
+  /** An array relationship */
   liabilities: Array<Liabilities>;
-  /** fetch aggregated fields from the table: "liabilities" */
+  /** An aggregate relationship */
   liabilities_aggregate: Liabilities_Aggregate;
   /** fetch data from the table: "liabilities" using primary key columns */
   liabilities_by_pk: Maybe<Liabilities>;
@@ -4034,9 +4917,9 @@ export type Query_Root = {
   recurring_labels_aggregate: Recurring_Labels_Aggregate;
   /** fetch data from the table: "recurring_labels" using primary key columns */
   recurring_labels_by_pk: Maybe<Recurring_Labels>;
-  /** fetch data from the table: "revenues" */
+  /** An array relationship */
   revenues: Array<Revenues>;
-  /** fetch aggregated fields from the table: "revenues" */
+  /** An aggregate relationship */
   revenues_aggregate: Revenues_Aggregate;
   /** fetch data from the table: "revenues" using primary key columns */
   revenues_by_pk: Maybe<Revenues>;
@@ -4070,6 +4953,12 @@ export type Query_Root = {
   transactions_aggregate: Transactions_Aggregate;
   /** fetch data from the table: "transactions" using primary key columns */
   transactions_by_pk: Maybe<Transactions>;
+  /** fetch data from the table: "transactions_import" */
+  transactions_import: Array<Transactions_Import>;
+  /** fetch aggregated fields from the table: "transactions_import" */
+  transactions_import_aggregate: Transactions_Import_Aggregate;
+  /** fetch data from the table: "transactions_import" using primary key columns */
+  transactions_import_by_pk: Maybe<Transactions_Import>;
   /** fetch data from the table: "user_settings" */
   user_settings: Array<User_Settings>;
   /** fetch aggregated fields from the table: "user_settings" */
@@ -4479,6 +5368,29 @@ export type Query_RootTransactions_AggregateArgs = {
 
 export type Query_RootTransactions_By_PkArgs = {
   id: Scalars['bigint'];
+};
+
+
+export type Query_RootTransactions_ImportArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Import_Order_By>>;
+  where: InputMaybe<Transactions_Import_Bool_Exp>;
+};
+
+
+export type Query_RootTransactions_Import_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Import_Order_By>>;
+  where: InputMaybe<Transactions_Import_Bool_Exp>;
+};
+
+
+export type Query_RootTransactions_Import_By_PkArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -5680,7 +6592,12 @@ export type Revenues = {
   __typename?: 'revenues';
   /** An object relationship */
   account_info: Account_Info;
+  account_no: Maybe<Scalars['String']>;
   active: Scalars['Boolean'];
+  alternate_name: Maybe<Scalars['String']>;
+  /** An object relationship */
+  category: Maybe<Categories>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Scalars['timestamptz'];
   default: Scalars['Boolean'];
   id: Scalars['bigint'];
@@ -5693,6 +6610,33 @@ export type Revenues_Aggregate = {
   __typename?: 'revenues_aggregate';
   aggregate: Maybe<Revenues_Aggregate_Fields>;
   nodes: Array<Revenues>;
+};
+
+export type Revenues_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Revenues_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Revenues_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Revenues_Aggregate_Bool_Exp_Count>;
+};
+
+export type Revenues_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Revenues_Select_Column_Revenues_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Revenues_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Revenues_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Revenues_Select_Column_Revenues_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Revenues_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Revenues_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Revenues_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Revenues_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "revenues" */
@@ -5718,10 +6662,39 @@ export type Revenues_Aggregate_FieldsCountArgs = {
   distinct: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "revenues" */
+export type Revenues_Aggregate_Order_By = {
+  avg?: InputMaybe<Revenues_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Revenues_Max_Order_By>;
+  min?: InputMaybe<Revenues_Min_Order_By>;
+  stddev?: InputMaybe<Revenues_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Revenues_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Revenues_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Revenues_Sum_Order_By>;
+  var_pop?: InputMaybe<Revenues_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Revenues_Var_Samp_Order_By>;
+  variance?: InputMaybe<Revenues_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "revenues" */
+export type Revenues_Arr_Rel_Insert_Input = {
+  data: Array<Revenues_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Revenues_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Revenues_Avg_Fields = {
   __typename?: 'revenues_avg_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "revenues" */
+export type Revenues_Avg_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "revenues". All fields are combined with a logical 'AND'. */
@@ -5730,7 +6703,11 @@ export type Revenues_Bool_Exp = {
   _not?: InputMaybe<Revenues_Bool_Exp>;
   _or?: InputMaybe<Array<Revenues_Bool_Exp>>;
   account_info?: InputMaybe<Account_Info_Bool_Exp>;
+  account_no?: InputMaybe<String_Comparison_Exp>;
   active?: InputMaybe<Boolean_Comparison_Exp>;
+  alternate_name?: InputMaybe<String_Comparison_Exp>;
+  category?: InputMaybe<Categories_Bool_Exp>;
+  category_id?: InputMaybe<Bigint_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   default?: InputMaybe<Boolean_Comparison_Exp>;
   id?: InputMaybe<Bigint_Comparison_Exp>;
@@ -5746,13 +6723,18 @@ export enum Revenues_Constraint {
 
 /** input type for incrementing numeric columns in table "revenues" */
 export type Revenues_Inc_Input = {
+  category_id?: InputMaybe<Scalars['bigint']>;
   id?: InputMaybe<Scalars['bigint']>;
 };
 
 /** input type for inserting data into table "revenues" */
 export type Revenues_Insert_Input = {
   account_info?: InputMaybe<Account_Info_Obj_Rel_Insert_Input>;
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Categories_Obj_Rel_Insert_Input>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['bigint']>;
@@ -5763,19 +6745,47 @@ export type Revenues_Insert_Input = {
 /** aggregate max on columns */
 export type Revenues_Max_Fields = {
   __typename?: 'revenues_max_fields';
+  account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
 };
 
+/** order by max() on columns of table "revenues" */
+export type Revenues_Max_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Revenues_Min_Fields = {
   __typename?: 'revenues_min_fields';
+  account_no: Maybe<Scalars['String']>;
+  alternate_name: Maybe<Scalars['String']>;
+  category_id: Maybe<Scalars['bigint']>;
   created_at: Maybe<Scalars['timestamptz']>;
   id: Maybe<Scalars['bigint']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "revenues" */
+export type Revenues_Min_Order_By = {
+  account_no?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "revenues" */
@@ -5804,7 +6814,11 @@ export type Revenues_On_Conflict = {
 /** Ordering options when selecting data from "revenues". */
 export type Revenues_Order_By = {
   account_info?: InputMaybe<Account_Info_Order_By>;
+  account_no?: InputMaybe<Order_By>;
   active?: InputMaybe<Order_By>;
+  alternate_name?: InputMaybe<Order_By>;
+  category?: InputMaybe<Categories_Order_By>;
+  category_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   default?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
@@ -5820,7 +6834,13 @@ export type Revenues_Pk_Columns_Input = {
 /** select columns of table "revenues" */
 export enum Revenues_Select_Column {
   /** column name */
+  AccountNo = 'account_no',
+  /** column name */
   Active = 'active',
+  /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -5833,9 +6853,28 @@ export enum Revenues_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
+/** select "revenues_aggregate_bool_exp_bool_and_arguments_columns" columns of table "revenues" */
+export enum Revenues_Select_Column_Revenues_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  Default = 'default'
+}
+
+/** select "revenues_aggregate_bool_exp_bool_or_arguments_columns" columns of table "revenues" */
+export enum Revenues_Select_Column_Revenues_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Active = 'active',
+  /** column name */
+  Default = 'default'
+}
+
 /** input type for updating data in table "revenues" */
 export type Revenues_Set_Input = {
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['bigint']>;
@@ -5846,19 +6885,40 @@ export type Revenues_Set_Input = {
 /** aggregate stddev on columns */
 export type Revenues_Stddev_Fields = {
   __typename?: 'revenues_stddev_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "revenues" */
+export type Revenues_Stddev_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Revenues_Stddev_Pop_Fields = {
   __typename?: 'revenues_stddev_pop_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "revenues" */
+export type Revenues_Stddev_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Revenues_Stddev_Samp_Fields = {
   __typename?: 'revenues_stddev_samp_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "revenues" */
+export type Revenues_Stddev_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "revenues" */
@@ -5871,7 +6931,10 @@ export type Revenues_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Revenues_Stream_Cursor_Value_Input = {
+  account_no?: InputMaybe<Scalars['String']>;
   active?: InputMaybe<Scalars['Boolean']>;
+  alternate_name?: InputMaybe<Scalars['String']>;
+  category_id?: InputMaybe<Scalars['bigint']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['bigint']>;
@@ -5882,13 +6945,26 @@ export type Revenues_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type Revenues_Sum_Fields = {
   __typename?: 'revenues_sum_fields';
+  category_id: Maybe<Scalars['bigint']>;
   id: Maybe<Scalars['bigint']>;
+};
+
+/** order by sum() on columns of table "revenues" */
+export type Revenues_Sum_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "revenues" */
 export enum Revenues_Update_Column {
   /** column name */
+  AccountNo = 'account_no',
+  /** column name */
   Active = 'active',
+  /** column name */
+  AlternateName = 'alternate_name',
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -5913,19 +6989,40 @@ export type Revenues_Updates = {
 /** aggregate var_pop on columns */
 export type Revenues_Var_Pop_Fields = {
   __typename?: 'revenues_var_pop_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "revenues" */
+export type Revenues_Var_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Revenues_Var_Samp_Fields = {
   __typename?: 'revenues_var_samp_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "revenues" */
+export type Revenues_Var_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Revenues_Variance_Fields = {
   __typename?: 'revenues_variance_fields';
+  category_id: Maybe<Scalars['Float']>;
   id: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "revenues" */
+export type Revenues_Variance_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to compare columns of type "smallint". All fields are combined with logical 'AND'. */
@@ -6196,9 +7293,9 @@ export type Subscription_Root = {
   account_info_by_pk: Maybe<Account_Info>;
   /** fetch data from the table in a streaming manner: "account_info" */
   account_info_stream: Array<Account_Info>;
-  /** fetch data from the table: "assets" */
+  /** An array relationship */
   assets: Array<Assets>;
-  /** fetch aggregated fields from the table: "assets" */
+  /** An aggregate relationship */
   assets_aggregate: Assets_Aggregate;
   /** fetch data from the table: "assets" using primary key columns */
   assets_by_pk: Maybe<Assets>;
@@ -6212,9 +7309,9 @@ export type Subscription_Root = {
   categories_by_pk: Maybe<Categories>;
   /** fetch data from the table in a streaming manner: "categories" */
   categories_stream: Array<Categories>;
-  /** fetch data from the table: "expenses" */
+  /** An array relationship */
   expenses: Array<Expenses>;
-  /** fetch aggregated fields from the table: "expenses" */
+  /** An aggregate relationship */
   expenses_aggregate: Expenses_Aggregate;
   /** fetch data from the table: "expenses" using primary key columns */
   expenses_by_pk: Maybe<Expenses>;
@@ -6244,9 +7341,9 @@ export type Subscription_Root = {
   labels_by_pk: Maybe<Labels>;
   /** fetch data from the table in a streaming manner: "labels" */
   labels_stream: Array<Labels>;
-  /** fetch data from the table: "liabilities" */
+  /** An array relationship */
   liabilities: Array<Liabilities>;
-  /** fetch aggregated fields from the table: "liabilities" */
+  /** An aggregate relationship */
   liabilities_aggregate: Liabilities_Aggregate;
   /** fetch data from the table: "liabilities" using primary key columns */
   liabilities_by_pk: Maybe<Liabilities>;
@@ -6276,9 +7373,9 @@ export type Subscription_Root = {
   recurring_labels_stream: Array<Recurring_Labels>;
   /** fetch data from the table in a streaming manner: "recurring" */
   recurring_stream: Array<Recurring>;
-  /** fetch data from the table: "revenues" */
+  /** An array relationship */
   revenues: Array<Revenues>;
-  /** fetch aggregated fields from the table: "revenues" */
+  /** An aggregate relationship */
   revenues_aggregate: Revenues_Aggregate;
   /** fetch data from the table: "revenues" using primary key columns */
   revenues_by_pk: Maybe<Revenues>;
@@ -6322,6 +7419,14 @@ export type Subscription_Root = {
   transactions_aggregate: Transactions_Aggregate;
   /** fetch data from the table: "transactions" using primary key columns */
   transactions_by_pk: Maybe<Transactions>;
+  /** fetch data from the table: "transactions_import" */
+  transactions_import: Array<Transactions_Import>;
+  /** fetch aggregated fields from the table: "transactions_import" */
+  transactions_import_aggregate: Transactions_Import_Aggregate;
+  /** fetch data from the table: "transactions_import" using primary key columns */
+  transactions_import_by_pk: Maybe<Transactions_Import>;
+  /** fetch data from the table in a streaming manner: "transactions_import" */
+  transactions_import_stream: Array<Transactions_Import>;
   /** fetch data from the table in a streaming manner: "transactions" */
   transactions_stream: Array<Transactions>;
   /** fetch data from the table: "user_settings" */
@@ -6849,6 +7954,36 @@ export type Subscription_RootTransactions_AggregateArgs = {
 
 export type Subscription_RootTransactions_By_PkArgs = {
   id: Scalars['bigint'];
+};
+
+
+export type Subscription_RootTransactions_ImportArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Import_Order_By>>;
+  where: InputMaybe<Transactions_Import_Bool_Exp>;
+};
+
+
+export type Subscription_RootTransactions_Import_AggregateArgs = {
+  distinct_on: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  limit: InputMaybe<Scalars['Int']>;
+  offset: InputMaybe<Scalars['Int']>;
+  order_by: InputMaybe<Array<Transactions_Import_Order_By>>;
+  where: InputMaybe<Transactions_Import_Bool_Exp>;
+};
+
+
+export type Subscription_RootTransactions_Import_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootTransactions_Import_StreamArgs = {
+  batch_size: Scalars['Int'];
+  cursor: Array<InputMaybe<Transactions_Import_Stream_Cursor_Input>>;
+  where: InputMaybe<Transactions_Import_Bool_Exp>;
 };
 
 
@@ -8047,9 +9182,11 @@ export type Transactions = {
   /** An object relationship */
   category: Maybe<Categories>;
   category_id: Maybe<Scalars['bigint']>;
+  client_reference: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
   description: Maybe<Scalars['String']>;
   id: Scalars['bigint'];
+  mandate_reference: Maybe<Scalars['String']>;
   /** An object relationship */
   recurring: Maybe<Recurring>;
   recurring_id: Maybe<Scalars['bigint']>;
@@ -8280,9 +9417,11 @@ export type Transactions_Bool_Exp = {
   amount?: InputMaybe<Float8_Comparison_Exp>;
   category?: InputMaybe<Categories_Bool_Exp>;
   category_id?: InputMaybe<Bigint_Comparison_Exp>;
+  client_reference?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Bigint_Comparison_Exp>;
+  mandate_reference?: InputMaybe<String_Comparison_Exp>;
   recurring?: InputMaybe<Recurring_Bool_Exp>;
   recurring_id?: InputMaybe<Bigint_Comparison_Exp>;
   transaction_accounts?: InputMaybe<Transaction_Accounts_Bool_Exp>;
@@ -8300,6 +9439,383 @@ export enum Transactions_Constraint {
   /** unique or primary key constraint on columns "id" */
   TransactionsPkey = 'transactions_pkey'
 }
+
+/** columns and relationships of "transactions_import" */
+export type Transactions_Import = {
+  __typename?: 'transactions_import';
+  /** An object relationship */
+  asset: Assets;
+  asset_id: Scalars['bigint'];
+  created_at: Scalars['timestamptz'];
+  file_name: Scalars['String'];
+  id: Scalars['Int'];
+  status: Scalars['smallint'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "transactions_import" */
+export type Transactions_Import_Aggregate = {
+  __typename?: 'transactions_import_aggregate';
+  aggregate: Maybe<Transactions_Import_Aggregate_Fields>;
+  nodes: Array<Transactions_Import>;
+};
+
+export type Transactions_Import_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Transactions_Import_Aggregate_Bool_Exp_Count>;
+};
+
+export type Transactions_Import_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+  filter?: InputMaybe<Transactions_Import_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "transactions_import" */
+export type Transactions_Import_Aggregate_Fields = {
+  __typename?: 'transactions_import_aggregate_fields';
+  avg: Maybe<Transactions_Import_Avg_Fields>;
+  count: Scalars['Int'];
+  max: Maybe<Transactions_Import_Max_Fields>;
+  min: Maybe<Transactions_Import_Min_Fields>;
+  stddev: Maybe<Transactions_Import_Stddev_Fields>;
+  stddev_pop: Maybe<Transactions_Import_Stddev_Pop_Fields>;
+  stddev_samp: Maybe<Transactions_Import_Stddev_Samp_Fields>;
+  sum: Maybe<Transactions_Import_Sum_Fields>;
+  var_pop: Maybe<Transactions_Import_Var_Pop_Fields>;
+  var_samp: Maybe<Transactions_Import_Var_Samp_Fields>;
+  variance: Maybe<Transactions_Import_Variance_Fields>;
+};
+
+
+/** aggregate fields of "transactions_import" */
+export type Transactions_Import_Aggregate_FieldsCountArgs = {
+  columns: InputMaybe<Array<Transactions_Import_Select_Column>>;
+  distinct: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "transactions_import" */
+export type Transactions_Import_Aggregate_Order_By = {
+  avg?: InputMaybe<Transactions_Import_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Transactions_Import_Max_Order_By>;
+  min?: InputMaybe<Transactions_Import_Min_Order_By>;
+  stddev?: InputMaybe<Transactions_Import_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Transactions_Import_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Transactions_Import_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Transactions_Import_Sum_Order_By>;
+  var_pop?: InputMaybe<Transactions_Import_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Transactions_Import_Var_Samp_Order_By>;
+  variance?: InputMaybe<Transactions_Import_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "transactions_import" */
+export type Transactions_Import_Arr_Rel_Insert_Input = {
+  data: Array<Transactions_Import_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Transactions_Import_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Transactions_Import_Avg_Fields = {
+  __typename?: 'transactions_import_avg_fields';
+  asset_id: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+  status: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "transactions_import" */
+export type Transactions_Import_Avg_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "transactions_import". All fields are combined with a logical 'AND'. */
+export type Transactions_Import_Bool_Exp = {
+  _and?: InputMaybe<Array<Transactions_Import_Bool_Exp>>;
+  _not?: InputMaybe<Transactions_Import_Bool_Exp>;
+  _or?: InputMaybe<Array<Transactions_Import_Bool_Exp>>;
+  asset?: InputMaybe<Assets_Bool_Exp>;
+  asset_id?: InputMaybe<Bigint_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  file_name?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  status?: InputMaybe<Smallint_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "transactions_import" */
+export enum Transactions_Import_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TransactionsImportPkey = 'transactions_import_pkey'
+}
+
+/** input type for incrementing numeric columns in table "transactions_import" */
+export type Transactions_Import_Inc_Input = {
+  asset_id?: InputMaybe<Scalars['bigint']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['smallint']>;
+};
+
+/** input type for inserting data into table "transactions_import" */
+export type Transactions_Import_Insert_Input = {
+  asset?: InputMaybe<Assets_Obj_Rel_Insert_Input>;
+  asset_id?: InputMaybe<Scalars['bigint']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  file_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['smallint']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Transactions_Import_Max_Fields = {
+  __typename?: 'transactions_import_max_fields';
+  asset_id: Maybe<Scalars['bigint']>;
+  created_at: Maybe<Scalars['timestamptz']>;
+  file_name: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['Int']>;
+  status: Maybe<Scalars['smallint']>;
+  updated_at: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "transactions_import" */
+export type Transactions_Import_Max_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  file_name?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Transactions_Import_Min_Fields = {
+  __typename?: 'transactions_import_min_fields';
+  asset_id: Maybe<Scalars['bigint']>;
+  created_at: Maybe<Scalars['timestamptz']>;
+  file_name: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['Int']>;
+  status: Maybe<Scalars['smallint']>;
+  updated_at: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "transactions_import" */
+export type Transactions_Import_Min_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  file_name?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "transactions_import" */
+export type Transactions_Import_Mutation_Response = {
+  __typename?: 'transactions_import_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Transactions_Import>;
+};
+
+/** on_conflict condition type for table "transactions_import" */
+export type Transactions_Import_On_Conflict = {
+  constraint: Transactions_Import_Constraint;
+  update_columns?: Array<Transactions_Import_Update_Column>;
+  where?: InputMaybe<Transactions_Import_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "transactions_import". */
+export type Transactions_Import_Order_By = {
+  asset?: InputMaybe<Assets_Order_By>;
+  asset_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  file_name?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: transactions_import */
+export type Transactions_Import_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "transactions_import" */
+export enum Transactions_Import_Select_Column {
+  /** column name */
+  AssetId = 'asset_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  FileName = 'file_name',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "transactions_import" */
+export type Transactions_Import_Set_Input = {
+  asset_id?: InputMaybe<Scalars['bigint']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  file_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['smallint']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Transactions_Import_Stddev_Fields = {
+  __typename?: 'transactions_import_stddev_fields';
+  asset_id: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+  status: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "transactions_import" */
+export type Transactions_Import_Stddev_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Transactions_Import_Stddev_Pop_Fields = {
+  __typename?: 'transactions_import_stddev_pop_fields';
+  asset_id: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+  status: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "transactions_import" */
+export type Transactions_Import_Stddev_Pop_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Transactions_Import_Stddev_Samp_Fields = {
+  __typename?: 'transactions_import_stddev_samp_fields';
+  asset_id: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+  status: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "transactions_import" */
+export type Transactions_Import_Stddev_Samp_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "transactions_import" */
+export type Transactions_Import_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Transactions_Import_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Transactions_Import_Stream_Cursor_Value_Input = {
+  asset_id?: InputMaybe<Scalars['bigint']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  file_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['smallint']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate sum on columns */
+export type Transactions_Import_Sum_Fields = {
+  __typename?: 'transactions_import_sum_fields';
+  asset_id: Maybe<Scalars['bigint']>;
+  id: Maybe<Scalars['Int']>;
+  status: Maybe<Scalars['smallint']>;
+};
+
+/** order by sum() on columns of table "transactions_import" */
+export type Transactions_Import_Sum_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "transactions_import" */
+export enum Transactions_Import_Update_Column {
+  /** column name */
+  AssetId = 'asset_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  FileName = 'file_name',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Transactions_Import_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Transactions_Import_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Transactions_Import_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Transactions_Import_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Transactions_Import_Var_Pop_Fields = {
+  __typename?: 'transactions_import_var_pop_fields';
+  asset_id: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+  status: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "transactions_import" */
+export type Transactions_Import_Var_Pop_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Transactions_Import_Var_Samp_Fields = {
+  __typename?: 'transactions_import_var_samp_fields';
+  asset_id: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+  status: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "transactions_import" */
+export type Transactions_Import_Var_Samp_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Transactions_Import_Variance_Fields = {
+  __typename?: 'transactions_import_variance_fields';
+  asset_id: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+  status: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "transactions_import" */
+export type Transactions_Import_Variance_Order_By = {
+  asset_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+};
 
 /** input type for incrementing numeric columns in table "transactions" */
 export type Transactions_Inc_Input = {
@@ -8321,9 +9837,11 @@ export type Transactions_Insert_Input = {
   amount?: InputMaybe<Scalars['float8']>;
   category?: InputMaybe<Categories_Obj_Rel_Insert_Input>;
   category_id?: InputMaybe<Scalars['bigint']>;
+  client_reference?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['bigint']>;
+  mandate_reference?: InputMaybe<Scalars['String']>;
   recurring?: InputMaybe<Recurring_Obj_Rel_Insert_Input>;
   recurring_id?: InputMaybe<Scalars['bigint']>;
   transaction_accounts?: InputMaybe<Transaction_Accounts_Arr_Rel_Insert_Input>;
@@ -8341,9 +9859,11 @@ export type Transactions_Max_Fields = {
   account_to: Maybe<Scalars['Int']>;
   amount: Maybe<Scalars['float8']>;
   category_id: Maybe<Scalars['bigint']>;
+  client_reference: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['timestamptz']>;
   description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['bigint']>;
+  mandate_reference: Maybe<Scalars['String']>;
   recurring_id: Maybe<Scalars['bigint']>;
   transaction_date: Maybe<Scalars['date']>;
   transaction_type: Maybe<Scalars['Int']>;
@@ -8356,9 +9876,11 @@ export type Transactions_Max_Order_By = {
   account_to?: InputMaybe<Order_By>;
   amount?: InputMaybe<Order_By>;
   category_id?: InputMaybe<Order_By>;
+  client_reference?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  mandate_reference?: InputMaybe<Order_By>;
   recurring_id?: InputMaybe<Order_By>;
   transaction_date?: InputMaybe<Order_By>;
   transaction_type?: InputMaybe<Order_By>;
@@ -8372,9 +9894,11 @@ export type Transactions_Min_Fields = {
   account_to: Maybe<Scalars['Int']>;
   amount: Maybe<Scalars['float8']>;
   category_id: Maybe<Scalars['bigint']>;
+  client_reference: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['timestamptz']>;
   description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['bigint']>;
+  mandate_reference: Maybe<Scalars['String']>;
   recurring_id: Maybe<Scalars['bigint']>;
   transaction_date: Maybe<Scalars['date']>;
   transaction_type: Maybe<Scalars['Int']>;
@@ -8387,9 +9911,11 @@ export type Transactions_Min_Order_By = {
   account_to?: InputMaybe<Order_By>;
   amount?: InputMaybe<Order_By>;
   category_id?: InputMaybe<Order_By>;
+  client_reference?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  mandate_reference?: InputMaybe<Order_By>;
   recurring_id?: InputMaybe<Order_By>;
   transaction_date?: InputMaybe<Order_By>;
   transaction_type?: InputMaybe<Order_By>;
@@ -8428,9 +9954,11 @@ export type Transactions_Order_By = {
   amount?: InputMaybe<Order_By>;
   category?: InputMaybe<Categories_Order_By>;
   category_id?: InputMaybe<Order_By>;
+  client_reference?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  mandate_reference?: InputMaybe<Order_By>;
   recurring?: InputMaybe<Recurring_Order_By>;
   recurring_id?: InputMaybe<Order_By>;
   transaction_accounts_aggregate?: InputMaybe<Transaction_Accounts_Aggregate_Order_By>;
@@ -8457,11 +9985,15 @@ export enum Transactions_Select_Column {
   /** column name */
   CategoryId = 'category_id',
   /** column name */
+  ClientReference = 'client_reference',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
+  /** column name */
+  MandateReference = 'mandate_reference',
   /** column name */
   RecurringId = 'recurring_id',
   /** column name */
@@ -8526,9 +10058,11 @@ export type Transactions_Set_Input = {
   account_to?: InputMaybe<Scalars['Int']>;
   amount?: InputMaybe<Scalars['float8']>;
   category_id?: InputMaybe<Scalars['bigint']>;
+  client_reference?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['bigint']>;
+  mandate_reference?: InputMaybe<Scalars['String']>;
   recurring_id?: InputMaybe<Scalars['bigint']>;
   transaction_date?: InputMaybe<Scalars['date']>;
   transaction_type?: InputMaybe<Scalars['Int']>;
@@ -8618,9 +10152,11 @@ export type Transactions_Stream_Cursor_Value_Input = {
   account_to?: InputMaybe<Scalars['Int']>;
   amount?: InputMaybe<Scalars['float8']>;
   category_id?: InputMaybe<Scalars['bigint']>;
+  client_reference?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['bigint']>;
+  mandate_reference?: InputMaybe<Scalars['String']>;
   recurring_id?: InputMaybe<Scalars['bigint']>;
   transaction_date?: InputMaybe<Scalars['date']>;
   transaction_type?: InputMaybe<Scalars['Int']>;
@@ -8661,11 +10197,15 @@ export enum Transactions_Update_Column {
   /** column name */
   CategoryId = 'category_id',
   /** column name */
+  ClientReference = 'client_reference',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
+  /** column name */
+  MandateReference = 'mandate_reference',
   /** column name */
   RecurringId = 'recurring_id',
   /** column name */
@@ -9141,6 +10681,13 @@ export type InsertGaugeDataMutationVariables = Exact<{
 
 export type InsertGaugeDataMutation = { __typename?: 'mutation_root', insert_gauge_data_one: { __typename?: 'gauge_data', id: string } | null };
 
+export type InsertStatusInfoDataMutationVariables = Exact<{
+  statusData: Status_Data_Insert_Input;
+}>;
+
+
+export type InsertStatusInfoDataMutation = { __typename?: 'mutation_root', insert_status_data_one: { __typename?: 'status_data', ts: string, sensor_name: string } | null };
+
 
 export const GetRecurringItemsDocument = gql`
     query getRecurringItems {
@@ -9209,8 +10756,19 @@ export const InsertGaugeDataDocument = gql`
   }
 }
     `;
+export const InsertStatusInfoDataDocument = gql`
+    mutation insertStatusInfoData($statusData: status_data_insert_input!) {
+  insert_status_data_one(
+    object: $statusData
+    on_conflict: {constraint: status_data_pkey, update_columns: [doublevalue, ts, stringvalue]}
+  ) {
+    ts
+    sensor_name
+  }
+}
+    `;
 
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?: Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
@@ -9218,19 +10776,22 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
     getRecurringItems(variables?: GetRecurringItemsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetRecurringItemsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetRecurringItemsQuery>(GetRecurringItemsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getRecurringItems', 'query');
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRecurringItemsQuery>(GetRecurringItemsDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'getRecurringItems', 'query');
     },
     insertTransaction(variables: InsertTransactionMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<InsertTransactionMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<InsertTransactionMutation>(InsertTransactionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'insertTransaction', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertTransactionMutation>(InsertTransactionDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'insertTransaction', 'mutation');
     },
     insertNotification(variables: InsertNotificationMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<InsertNotificationMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<InsertNotificationMutation>(InsertNotificationDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'insertNotification', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertNotificationMutation>(InsertNotificationDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'insertNotification', 'mutation');
     },
     insertStatusData(variables: InsertStatusDataMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<InsertStatusDataMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<InsertStatusDataMutation>(InsertStatusDataDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'insertStatusData', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertStatusDataMutation>(InsertStatusDataDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'insertStatusData', 'mutation');
     },
     insertGaugeData(variables: InsertGaugeDataMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<InsertGaugeDataMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<InsertGaugeDataMutation>(InsertGaugeDataDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'insertGaugeData', 'mutation');
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertGaugeDataMutation>(InsertGaugeDataDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'insertGaugeData', 'mutation');
+    },
+    insertStatusInfoData(variables: InsertStatusInfoDataMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<InsertStatusInfoDataMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<InsertStatusInfoDataMutation>(InsertStatusInfoDataDocument, variables, { ...requestHeaders, ...wrappedRequestHeaders }), 'insertStatusInfoData', 'mutation');
     }
   };
 }

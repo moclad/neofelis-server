@@ -46,6 +46,23 @@ gql`
   }
 `;
 
+gql`
+  mutation insertStatusInfoData(
+    $statusData: status_data_insert_input!
+  ) {
+    insert_status_data_one(
+      object: $statusData
+      on_conflict: {
+        constraint: status_data_pkey
+        update_columns: [doublevalue, ts, stringvalue]
+      }
+    ) {
+      ts
+      sensor_name
+    }
+  }
+`;
+
 @Injectable()
 export class SensorsService {
   private readonly TEMPERATURE_PIN = 0;
@@ -94,11 +111,12 @@ export class SensorsService {
     const statusData = this.getStatusData(data);
 
 
-    const result = await this.sdk.insertStatusData({
+    await this.sdk.insertStatusInfoData({
       statusData,
     });
 
-    return `Sensor data for ${data.sensor} persisted (${result.insert_historical_data.affected_rows} data rows inserted).`;
+    return `Sensor data for ${data.sensor} persisted.`;
+
   }
 
 
