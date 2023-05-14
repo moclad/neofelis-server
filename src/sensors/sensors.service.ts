@@ -12,6 +12,7 @@ import {
 import { GqlSdk, InjectSdk } from '../sdk/sdk.module';
 import { GaugeDataDto } from './dto/gauge-data.dto';
 import { SensorDataDto } from './dto/sensor-data.dto';
+import { SensorStatusDto } from './dto/status-info.dto';
 
 gql`
   mutation insertStatusData(
@@ -66,8 +67,8 @@ export class SensorsService {
     dayjs.extend(utc);
   }
 
-  public insertGaugeData(data: GaugeDataDto) {
-    if (dayjs(this.lastGaugeDate).day() === dayjs().day() && data.amount === 0) {
+  public async insertGaugeData(data: GaugeDataDto) {
+    if (dayjs(this.lastGaugeDate).day() === dayjs().day() && data.tick === 0) {
       return "Data will not be inserted.";
     }
 
@@ -89,9 +90,20 @@ export class SensorsService {
     return result.insert_gauge_data_one.id;
   }
 
-
-  public insertSensorData(data: SensorDataDto) {
+  public async insertStatusInfo(data: SensorStatusDto) {
     const statusData = this.getStatusData(data);
+
+
+    const result = await this.sdk.insertStatusData({
+      statusData,
+    });
+
+    return `Sensor data for ${data.sensor} persisted (${result.insert_historical_data.affected_rows} data rows inserted).`;
+  }
+
+
+  public async insertSensorData(data: SensorDataDto) {
+    const statusData = this.getMultiStatusData(data);
     const historyData: Historical_Data_Insert_Input = {
       sensor_name: data.sensor,
       absolute_pressure: data.pressure,
@@ -111,7 +123,25 @@ export class SensorsService {
     return `Sensor data for ${data.sensor} persisted (${result.insert_historical_data.affected_rows} data rows inserted).`;
   }
 
-  private getStatusData(data: SensorDataDto): Status_Data_Insert_Input[] {
+  private getStatusData(data: SensorStatusDto): Status_Data_Insert_Input {
+    const ts = dayjs.utc().format();
+    const local = dayjs().local().format()
+
+    const status = `${data.status} (updated at ${local})`;
+
+
+    const statusData: Status_Data_Insert_Input = {
+      pin: 0,
+      ts,
+      sensor_name: data.sensor,
+      doublevalue: data.value,
+      stringvalue: status
+    };
+
+    return statusData;
+  }
+
+  private getMultiStatusData(data: SensorDataDto): Status_Data_Insert_Input[] {
     const statusData: Status_Data_Insert_Input[] = [];
 
     const ts = dayjs.utc().format();
