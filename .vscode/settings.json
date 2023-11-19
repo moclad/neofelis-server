@@ -8,6 +8,7 @@
     "**/.pnp.*": true
   },
   "cSpell.words": [
-    "deepcode"
+    "deepcode",
+    "doublevalue"
   ],
 }

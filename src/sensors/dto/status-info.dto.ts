@@ -23,10 +23,13 @@ export class SensorStatusDto {
 
   @ApiProperty({
     example: 10.5,
-    description: 'Any double number, status infomation ',
+    description: 'Any double number, status information',
   })
   @IsNumber()
   public value: number;
+}
 
-
+export class SensorNameDto {
+  @ApiProperty({ example: 'extern-sensor', description: 'Sensor name' })
+  public sensor: string;
 }

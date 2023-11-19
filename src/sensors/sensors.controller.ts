@@ -1,10 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { GaugeDataDto } from './dto/gauge-data.dto';
 import { SensorDataDto } from './dto/sensor-data.dto';
+import { SensorNameDto, SensorStatusDto } from './dto/status-info.dto';
 import { SensorsService } from './sensors.service';
-import { SensorStatusDto } from './dto/status-info.dto';
 
 @Controller('sensors')
 @ApiTags('sensors')
@@ -27,5 +27,11 @@ export class SensorsController {
   @ApiOperation({ summary: 'Insert sensor status information' })
   createStatusInfo(@Body() statusDto: SensorStatusDto) {
     return this.sensorsService.insertStatusInfo(statusDto);
+  }
+
+  @Get(':sensor')
+  @ApiOperation({ summary: 'Get sensor status information by sensor name' })
+  getStatusInfoBySensor(@Param('sensor') sensorName: string) {
+    return this.sensorsService.getSensorStatusInfo(sensorName);
   }
 }
