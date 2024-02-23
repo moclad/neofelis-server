@@ -216,7 +216,7 @@ export class SensorsService {
 
 
     const statusData: Status_Data_Insert_Input = {
-      pin: 0,
+      pin: data.pin ?? 0,
       ts,
       sensor_name: data.sensor,
       doublevalue: data.value,
