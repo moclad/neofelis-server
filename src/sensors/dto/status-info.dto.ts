@@ -16,6 +16,13 @@ export class SensorStatusDto {
   public time: number;
 
   @ApiProperty({
+    example: 0,
+    description: 'PIN number',
+  })
+  @IsNumber()
+  public pin: number;
+
+  @ApiProperty({
     example: 'Sensor health status',
     description: 'Status message',
   })
