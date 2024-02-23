@@ -2,12 +2,40 @@ table:
   name: categories
   schema: public
 array_relationships:
+  - name: assets
+    using:
+      foreign_key_constraint_on:
+        column: category_id
+        table:
+          name: assets
+          schema: public
+  - name: expenses
+    using:
+      foreign_key_constraint_on:
+        column: category_id
+        table:
+          name: expenses
+          schema: public
+  - name: liabilities
+    using:
+      foreign_key_constraint_on:
+        column: category_id
+        table:
+          name: liabilities
+          schema: public
   - name: recurrings
     using:
       foreign_key_constraint_on:
         column: category_id
         table:
           name: recurring
+          schema: public
+  - name: revenues
+    using:
+      foreign_key_constraint_on:
+        column: category_id
+        table:
+          name: revenues
           schema: public
   - name: transactions
     using:

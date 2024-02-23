@@ -117,6 +117,7 @@ export class SensorsService {
       sensor_name: data.sensor,
       tick: data.tick,
       amount: data.amount,
+      rain: data.rain,
       ts: dayjs.utc().format(),
     };
 

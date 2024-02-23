@@ -2226,6 +2226,7 @@ export type Gauge_Data = {
   amount: Maybe<Scalars['float8']>;
   battery: Maybe<Scalars['float8']>;
   id: Scalars['uuid'];
+  rain: Scalars['Int'];
   sensor_name: Scalars['String'];
   tick: Maybe<Scalars['smallint']>;
   ts: Scalars['timestamp'];
@@ -2266,6 +2267,7 @@ export type Gauge_Data_Avg_Fields = {
   __typename?: 'gauge_data_avg_fields';
   amount: Maybe<Scalars['Float']>;
   battery: Maybe<Scalars['Float']>;
+  rain: Maybe<Scalars['Float']>;
   tick: Maybe<Scalars['Float']>;
 };
 
@@ -2277,6 +2279,7 @@ export type Gauge_Data_Bool_Exp = {
   amount?: InputMaybe<Float8_Comparison_Exp>;
   battery?: InputMaybe<Float8_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  rain?: InputMaybe<Int_Comparison_Exp>;
   sensor_name?: InputMaybe<String_Comparison_Exp>;
   tick?: InputMaybe<Smallint_Comparison_Exp>;
   ts?: InputMaybe<Timestamp_Comparison_Exp>;
@@ -2294,6 +2297,7 @@ export enum Gauge_Data_Constraint {
 export type Gauge_Data_Inc_Input = {
   amount?: InputMaybe<Scalars['float8']>;
   battery?: InputMaybe<Scalars['float8']>;
+  rain?: InputMaybe<Scalars['Int']>;
   tick?: InputMaybe<Scalars['smallint']>;
 };
 
@@ -2302,6 +2306,7 @@ export type Gauge_Data_Insert_Input = {
   amount?: InputMaybe<Scalars['float8']>;
   battery?: InputMaybe<Scalars['float8']>;
   id?: InputMaybe<Scalars['uuid']>;
+  rain?: InputMaybe<Scalars['Int']>;
   sensor_name?: InputMaybe<Scalars['String']>;
   tick?: InputMaybe<Scalars['smallint']>;
   ts?: InputMaybe<Scalars['timestamp']>;
@@ -2313,6 +2318,7 @@ export type Gauge_Data_Max_Fields = {
   amount: Maybe<Scalars['float8']>;
   battery: Maybe<Scalars['float8']>;
   id: Maybe<Scalars['uuid']>;
+  rain: Maybe<Scalars['Int']>;
   sensor_name: Maybe<Scalars['String']>;
   tick: Maybe<Scalars['smallint']>;
   ts: Maybe<Scalars['timestamp']>;
@@ -2324,6 +2330,7 @@ export type Gauge_Data_Min_Fields = {
   amount: Maybe<Scalars['float8']>;
   battery: Maybe<Scalars['float8']>;
   id: Maybe<Scalars['uuid']>;
+  rain: Maybe<Scalars['Int']>;
   sensor_name: Maybe<Scalars['String']>;
   tick: Maybe<Scalars['smallint']>;
   ts: Maybe<Scalars['timestamp']>;
@@ -2350,6 +2357,7 @@ export type Gauge_Data_Order_By = {
   amount?: InputMaybe<Order_By>;
   battery?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  rain?: InputMaybe<Order_By>;
   sensor_name?: InputMaybe<Order_By>;
   tick?: InputMaybe<Order_By>;
   ts?: InputMaybe<Order_By>;
@@ -2370,6 +2378,8 @@ export enum Gauge_Data_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  Rain = 'rain',
+  /** column name */
   SensorName = 'sensor_name',
   /** column name */
   Tick = 'tick',
@@ -2382,6 +2392,7 @@ export type Gauge_Data_Set_Input = {
   amount?: InputMaybe<Scalars['float8']>;
   battery?: InputMaybe<Scalars['float8']>;
   id?: InputMaybe<Scalars['uuid']>;
+  rain?: InputMaybe<Scalars['Int']>;
   sensor_name?: InputMaybe<Scalars['String']>;
   tick?: InputMaybe<Scalars['smallint']>;
   ts?: InputMaybe<Scalars['timestamp']>;
@@ -2392,6 +2403,7 @@ export type Gauge_Data_Stddev_Fields = {
   __typename?: 'gauge_data_stddev_fields';
   amount: Maybe<Scalars['Float']>;
   battery: Maybe<Scalars['Float']>;
+  rain: Maybe<Scalars['Float']>;
   tick: Maybe<Scalars['Float']>;
 };
 
@@ -2400,6 +2412,7 @@ export type Gauge_Data_Stddev_Pop_Fields = {
   __typename?: 'gauge_data_stddev_pop_fields';
   amount: Maybe<Scalars['Float']>;
   battery: Maybe<Scalars['Float']>;
+  rain: Maybe<Scalars['Float']>;
   tick: Maybe<Scalars['Float']>;
 };
 
@@ -2408,6 +2421,7 @@ export type Gauge_Data_Stddev_Samp_Fields = {
   __typename?: 'gauge_data_stddev_samp_fields';
   amount: Maybe<Scalars['Float']>;
   battery: Maybe<Scalars['Float']>;
+  rain: Maybe<Scalars['Float']>;
   tick: Maybe<Scalars['Float']>;
 };
 
@@ -2424,6 +2438,7 @@ export type Gauge_Data_Stream_Cursor_Value_Input = {
   amount?: InputMaybe<Scalars['float8']>;
   battery?: InputMaybe<Scalars['float8']>;
   id?: InputMaybe<Scalars['uuid']>;
+  rain?: InputMaybe<Scalars['Int']>;
   sensor_name?: InputMaybe<Scalars['String']>;
   tick?: InputMaybe<Scalars['smallint']>;
   ts?: InputMaybe<Scalars['timestamp']>;
@@ -2434,6 +2449,7 @@ export type Gauge_Data_Sum_Fields = {
   __typename?: 'gauge_data_sum_fields';
   amount: Maybe<Scalars['float8']>;
   battery: Maybe<Scalars['float8']>;
+  rain: Maybe<Scalars['Int']>;
   tick: Maybe<Scalars['smallint']>;
 };
 
@@ -2445,6 +2461,8 @@ export enum Gauge_Data_Update_Column {
   Battery = 'battery',
   /** column name */
   Id = 'id',
+  /** column name */
+  Rain = 'rain',
   /** column name */
   SensorName = 'sensor_name',
   /** column name */
@@ -2467,6 +2485,7 @@ export type Gauge_Data_Var_Pop_Fields = {
   __typename?: 'gauge_data_var_pop_fields';
   amount: Maybe<Scalars['Float']>;
   battery: Maybe<Scalars['Float']>;
+  rain: Maybe<Scalars['Float']>;
   tick: Maybe<Scalars['Float']>;
 };
 
@@ -2475,6 +2494,7 @@ export type Gauge_Data_Var_Samp_Fields = {
   __typename?: 'gauge_data_var_samp_fields';
   amount: Maybe<Scalars['Float']>;
   battery: Maybe<Scalars['Float']>;
+  rain: Maybe<Scalars['Float']>;
   tick: Maybe<Scalars['Float']>;
 };
 
@@ -2483,6 +2503,7 @@ export type Gauge_Data_Variance_Fields = {
   __typename?: 'gauge_data_variance_fields';
   amount: Maybe<Scalars['Float']>;
   battery: Maybe<Scalars['Float']>;
+  rain: Maybe<Scalars['Float']>;
   tick: Maybe<Scalars['Float']>;
 };
 

@@ -5,3 +5,14 @@ object_relationships:
   - name: account_info
     using:
       foreign_key_constraint_on: id
+  - name: category
+    using:
+      foreign_key_constraint_on: category_id
+array_relationships:
+  - name: import_asset_files
+    using:
+      foreign_key_constraint_on:
+        column: asset_id
+        table:
+          name: import_asset_file
+          schema: public

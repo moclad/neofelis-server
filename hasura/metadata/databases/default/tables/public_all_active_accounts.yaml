@@ -1,0 +1,3 @@
+table:
+  name: all_active_accounts
+  schema: public

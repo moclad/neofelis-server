@@ -1,3 +1,5 @@
 - "!include public_gauge_data.yaml"
 - "!include public_historical_data.yaml"
+- "!include public_max_min_recorded_temperature.yaml"
 - "!include public_status_data.yaml"
+- "!include public_temperature_summary_daily.yaml"

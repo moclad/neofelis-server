@@ -1,0 +1,3 @@
+table:
+  name: temperature_summary_daily
+  schema: public

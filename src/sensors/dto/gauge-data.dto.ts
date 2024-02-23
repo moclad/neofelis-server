@@ -37,4 +37,11 @@ export class GaugeDataDto {
   })
   @IsNumber()
   public battery: number;
+
+  @ApiProperty({
+    example: 1,
+    description: 'Current rain tick value',
+  })
+  @IsNumber()
+  public rain: number;
 }

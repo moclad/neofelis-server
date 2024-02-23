@@ -1,0 +1,3 @@
+table:
+  name: max_min_recorded_temperature
+  schema: public
