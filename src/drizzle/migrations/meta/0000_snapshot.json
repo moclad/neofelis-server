@@ -1,0 +1,388 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.status_data": {
+      "name": "status_data",
+      "schema": "",
+      "columns": {
+        "sensor_name": {
+          "name": "sensor_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pin": {
+          "name": "pin",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ts": {
+          "name": "ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stringvalue": {
+          "name": "stringvalue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "doublevalue": {
+          "name": "doublevalue",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "status_data_pkey": {
+          "name": "status_data_pkey",
+          "columns": [
+            "sensor_name",
+            "pin"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "status_data_sensor_name_pin_key": {
+          "columns": [
+            "sensor_name",
+            "pin"
+          ],
+          "nullsNotDistinct": false,
+          "name": "status_data_sensor_name_pin_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.gauge_data": {
+      "name": "gauge_data",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sensor_name": {
+          "name": "sensor_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ts": {
+          "name": "ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "battery": {
+          "name": "battery",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tick": {
+          "name": "tick",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "amount": {
+          "name": "amount",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rain": {
+          "name": "rain",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {
+        "gauge_data_idx3": {
+          "name": "gauge_data_idx3",
+          "columns": [
+            {
+              "expression": "sensor_name",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "timestamp_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "ts",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "gauge_data_ts_idx1": {
+          "name": "gauge_data_ts_idx1",
+          "columns": [
+            {
+              "expression": "ts",
+              "asc": false,
+              "nulls": "first",
+              "opclass": "timestamp_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "gauge_data_pkey": {
+          "name": "gauge_data_pkey",
+          "columns": [
+            "id",
+            "ts"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "gauge_data_id_ts_key": {
+          "columns": [
+            "id",
+            "ts"
+          ],
+          "nullsNotDistinct": false,
+          "name": "gauge_data_id_ts_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.historical_data": {
+      "name": "historical_data",
+      "schema": "",
+      "columns": {
+        "sensor_name": {
+          "name": "sensor_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ts": {
+          "name": "ts",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "temperature": {
+          "name": "temperature",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "humidity": {
+          "name": "humidity",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "absolute_pressure": {
+          "name": "absolute_pressure",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "relative_pressure": {
+          "name": "relative_pressure",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "battery": {
+          "name": "battery",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zambretti": {
+          "name": "zambretti",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        }
+      },
+      "indexes": {
+        "historical_data_idx3": {
+          "name": "historical_data_idx3",
+          "columns": [
+            {
+              "expression": "sensor_name",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "ts",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "historical_data_ts_idx1": {
+          "name": "historical_data_ts_idx1",
+          "columns": [
+            {
+              "expression": "ts",
+              "asc": false,
+              "nulls": "first",
+              "opclass": "timestamp_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "historical_data_pkey": {
+          "name": "historical_data_pkey",
+          "columns": [
+            "ts",
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "historical_data_id_ts_key": {
+          "columns": [
+            "ts",
+            "id"
+          ],
+          "nullsNotDistinct": false,
+          "name": "historical_data_id_ts_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {
+    "public.temperature_summary_daily": {
+      "name": "temperature_summary_daily",
+      "schema": "public",
+      "columns": {
+        "bucket": {
+          "name": "bucket",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avg_temp": {
+          "name": "avg_temp",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_temp": {
+          "name": "max_temp",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "min_temp": {
+          "name": "min_temp",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT _materialized_hypertable_7.bucket, _materialized_hypertable_7.avg_temp, _materialized_hypertable_7.max_temp, _materialized_hypertable_7.min_temp FROM _timescaledb_internal._materialized_hypertable_7 WHERE _materialized_hypertable_7.bucket < COALESCE(_timescaledb_internal.to_timestamp_without_timezone(_timescaledb_internal.cagg_watermark(7)), '-infinity'::timestamp without time zone) UNION ALL SELECT time_bucket('1 day'::interval, historical_data.ts) AS bucket, avg(historical_data.temperature) AS avg_temp, max(historical_data.temperature) AS max_temp, min(historical_data.temperature) AS min_temp FROM historical_data WHERE historical_data.ts >= COALESCE(_timescaledb_internal.to_timestamp_without_timezone(_timescaledb_internal.cagg_watermark(7)), '-infinity'::timestamp without time zone) GROUP BY (time_bucket('1 day'::interval, historical_data.ts))",
+      "materialized": false
+    },
+    "public.max_min_recorded_temperature": {
+      "name": "max_min_recorded_temperature",
+      "schema": "public",
+      "columns": {
+        "max_temperature": {
+          "name": "max_temperature",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_year": {
+          "name": "max_year",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "min_temperature": {
+          "name": "min_temperature",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "min_year": {
+          "name": "min_year",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "isExisting": false,
+      "definition": "SELECT max(data.max_temp)::numeric AS max_temperature, EXTRACT(year FROM last(data.bucket, data.max_temp)) AS max_year, min(data.min_temp)::numeric AS min_temperature, EXTRACT(year FROM first(data.bucket, data.min_temp)) AS min_year FROM ( SELECT temperature_summary_daily.min_temp, temperature_summary_daily.max_temp, temperature_summary_daily.bucket FROM temperature_summary_daily WHERE EXTRACT(day FROM temperature_summary_daily.bucket) = EXTRACT(day FROM now()) AND EXTRACT(month FROM temperature_summary_daily.bucket) = EXTRACT(month FROM now())) data",
+      "materialized": false
+    }
+  },
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}

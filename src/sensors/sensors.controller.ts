@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { GaugeDataDto } from './dto/gauge-data.dto';
+import { GaugeDataDto } from '../sensors/dto/gauge-data.dto';
 import { SensorDataDto } from './dto/sensor-data.dto';
-import { SensorNameDto, SensorStatusDto } from './dto/status-info.dto';
+import { SensorStatusDto } from './dto/status-info.dto';
 import { SensorsService } from './sensors.service';
 
-@Controller('sensors')
+@Controller({ version: '1', path: 'sensors' })
 @ApiTags('sensors')
 export class SensorsController {
   constructor(private readonly sensorsService: SensorsService) { }

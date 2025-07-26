@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { gql } from 'graphql-request';
 
@@ -169,18 +169,18 @@ export class SensorsService {
       return sensorData;
     }
 
-    sensorData.humidity = result.status_data.find(x => x.pin === this.HUMIDITY_PIN).doublevalue;
-    sensorData.rel_pressure = result.status_data.find(x => x.pin === this.RELATIVE_PRESSURE_PIN).doublevalue;
-    sensorData.sensor = result.status_data.find(x => x.pin === this.TEMPERATURE_PIN).sensor_name;
-    sensorData.temperature = result.status_data.find(x => x.pin === this.TEMPERATURE_PIN).doublevalue;
-    sensorData.volt = result.status_data.find(x => x.pin === this.BATTERY_VOLTS_PIN).doublevalue;
-    sensorData.zambretti = result.status_data.find(x => x.pin === this.ZAMBRETTIS_WORD_PIN).stringvalue;
-    sensorData.avg_today = result.temperature_summary_daily[0].avg_temp;
-    sensorData.max_today = result.temperature_summary_daily[0].max_temp;
-    sensorData.min_today = result.temperature_summary_daily[0].min_temp;
-    sensorData.record_max = result.max_min_recorded_temperature[0].max_temperature;
-    sensorData.record_max_year = result.max_min_recorded_temperature[0].max_year;
-    sensorData.record_min = result.max_min_recorded_temperature[0].min_temperature;
+    sensorData.humidity = result.status_data.find(x => x.pin === this.HUMIDITY_PIN)?.doublevalue;
+    sensorData.rel_pressure = result.status_data.find(x => x.pin === this.RELATIVE_PRESSURE_PIN)?.doublevalue;
+    sensorData.sensor = result.status_data.find(x => x.pin === this.TEMPERATURE_PIN)?.sensor_name;
+    sensorData.temperature = result.status_data.find(x => x.pin === this.TEMPERATURE_PIN)?.doublevalue;
+    sensorData.volt = result.status_data.find(x => x.pin === this.BATTERY_VOLTS_PIN)?.doublevalue;
+    sensorData.zambretti = result.status_data.find(x => x.pin === this.ZAMBRETTIS_WORD_PIN)?.stringvalue;
+    sensorData.avg_today = result.temperature_summary_daily[0]?.avg_temp;
+    sensorData.max_today = result.temperature_summary_daily[0]?.max_temp;
+    sensorData.min_today = result.temperature_summary_daily[0]?.min_temp;
+    sensorData.record_max = result.max_min_recorded_temperature[0]?.max_temperature;
+    sensorData.record_max_year = result.max_min_recorded_temperature[0]?.max_year;
+    sensorData.record_min = result.max_min_recorded_temperature[0]?.min_temperature;
     sensorData.record_min_year = result.max_min_recorded_temperature[0].min_year;
 
     return sensorData;

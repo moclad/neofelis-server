@@ -2,7 +2,7 @@ import { GraphQLClient } from 'graphql-request';
 
 import { GraphQLClientInject, GraphQLRequestModule } from '@golevelup/nestjs-graphql-request';
 import { Inject, Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { getSdk } from './sdk';
 
@@ -14,33 +14,37 @@ export const InjectSdk = () => Inject(SDK);
 
 @Module({
   imports: [
-    GraphQLRequestModule.forRootAsync(GraphQLRequestModule, {
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const endpoint = configService.get<string>(
-          'HASURA_GRAPHQL_API_ENDPOINT',
-        );
-        const secret = configService.get<string>('HASURA_GRAPHQL_ADMIN_SECRET');
+    ConfigModule,
+    GraphQLRequestModule.forRootAsync(
+      {
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => {
+          const endpoint = configService.get<string>(
+            'HASURA_GRAPHQL_API_ENDPOINT',
+          );
+          const secret = configService.get<string>('HASURA_GRAPHQL_ADMIN_SECRET');
 
-        return {
-          endpoint,
-          options: {
-            headers: {
-              'content-type': 'application/json',
-              'x-hasura-admin-secret': secret,
+          return {
+            endpoint,
+            options: {
+              headers: {
+                'content-type': 'application/json',
+                'x-hasura-admin-secret': secret,
+              },
             },
-          },
-        };
+          };
+        },
       },
-    }),
+    ),
   ],
   providers: [
     {
       provide: SDK,
-      inject: [GraphQLClientInject],
+      inject: [GraphQLClientInject,],
       useFactory: (client: GraphQLClient) => getSdk(client),
     },
   ],
   exports: [SDK],
 })
-export class SdkModule {}
+export class SdkModule { }
